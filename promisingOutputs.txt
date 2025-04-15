@@ -1,0 +1,5 @@
+Seed text:
+defarge refreshed himself with a draught of winebut he took less than was given to the stranger as being himself a man to whom it was no rarityand stood waiting until the countryman had made his breakfast. he looked at no one present and no one now looked at him not even madame defarge who had taken up her knitting and was at work.
+
+Output:
+He told her father that he expressly confided his wife and child to his care. The sun, taking less than was given, went aloft. Jacques said, "The sun listens." As he kneeled, his fingers wandered over those fine nerves with a strikingly greedy air, as if he hungered for something that was neither food nor drink. The guard, horse and foot, surrounded the petitioner and struck him blows; no one now looked at him, not even Madame Defarge, who had taken up her knitting and was at work.

@@ -47,7 +47,7 @@ public class Main {
             ArrayList<HashMap<String, ArrayList<Tree>>> originalSentencePhraseMap = NLP.parseParagraph(originalDoc);
 
             // Now allow the swapping of a random style of phrase
-            Phrase randomPhrase = randomPhrase();
+            Phrase randomPhrase = NLP.randomPhrase();
             String newIdea = NLP.swapAPhrase(originalSentencePhraseMap, sentencePhraseMap, randomPhrase, us.shareIdea().currentIdea);
 
             // Adjust the new Idea based on what was selected
@@ -62,66 +62,5 @@ public class Main {
         System.out.println("-------\nJester Interaction Complete\n--------");
 
         System.out.println("Final Idea: " + us.shareIdea().currentIdea);
-
-        // // JESTER ONE:
-        // Jester j = jf.newJester();
-        // Idea i = j.shareIdea();
-        // CoreDocument doc = i.getDoc();
-
-        // System.out.println(j.personalityIndex);
-
-        // // Each index is a sentence made up of dictionaries of phrases
-        // ArrayList<HashMap<String, ArrayList<Tree>>> sentencePhraseMap = NLP.parseParagraph(doc);
-        
-        // // JESTER TWO:
-        // Jester j2 = jf.newJester();
-        // Idea i2 = j2.shareIdea();
-        // CoreDocument doc2 = i2.getDoc();
-
-        // System.out.println(j2.personalityIndex);
-
-        // // Each index is a sentence made up of dictionaries of phrases
-        // ArrayList<HashMap<String, ArrayList<Tree>>> sentencePhraseMap2 = NLP.parseParagraph(doc2);
-
-        // // JESTER THREE:
-        // Jester j3 = jf.newJester();
-        // Idea i3 = j3.shareIdea();
-        // CoreDocument doc3 = i3.getDoc();
-
-        // // Each index is a sentence made up of dictionaries of phrases
-        // ArrayList<HashMap<String, ArrayList<Tree>>> sentencePhraseMap3 = NLP.parseParagraph(doc3);
-
-        // // Output original idea
-        // System.out.println("Jesters original idea: " + i.seed);
-
-        // // Swap for a random NP
-        // String newIdea = NLP.swapAPhrase(sentencePhraseMap, sentencePhraseMap2, Phrase.NP, i.currentIdea);
-        // if (newIdea.equals("")){
-        //     System.out.println("No new idea was created, no similar NP found");
-        // } else {
-        //     i.takeNewIdea(newIdea);
-        //     System.out.println("New Idea Being taken: " + newIdea);
-        // }
-
-        // sentencePhraseMap = NLP.parseParagraph(i.getDoc());
-        // newIdea = NLP.swapAPhrase(sentencePhraseMap, sentencePhraseMap3, Phrase.VP, i.currentIdea);
-        // if (newIdea.equals("")){
-        //     System.out.println("No new idea was created, no similar VP found");
-        // } else {
-        //     System.out.println("New Idea Being taken: " + newIdea);
-        //     i.takeNewIdea(newIdea);
-        // }
-
-        // System.out.println("Jesters new Idea: " + i.currentIdea);
-
-
-
-    }
-
-    private static Phrase randomPhrase() {
-        // Select a random enum from the Phrase enum
-        Phrase[] phrases = Phrase.values();
-        int randomIndex = (int) (Math.random() * phrases.length);
-        return phrases[randomIndex];
     }
 }

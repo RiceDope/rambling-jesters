@@ -171,5 +171,12 @@ public class NLP {
         return "";
 
     }
+
+    public static Phrase randomPhrase() {
+        // Select a random enum from the Phrase enum
+        Phrase[] phrases = Phrase.values();
+        int randomIndex = (int) (Math.random() * phrases.length);
+        return phrases[randomIndex];
+    }
     
 }
