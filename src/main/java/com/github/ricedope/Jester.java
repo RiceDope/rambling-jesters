@@ -9,30 +9,30 @@ public class Jester {
     private int id; // Give a unique ID based on when the Jester was created (1 through 50)
     private String name; // Name of the Jester (Randomly assigned at runtime)
     private String seed; // Stored as an array of tokens
-    // private Word[] words; // Array of words that is the working memory of the Jester
-    /*
-     * Word [
-     *   String text; // The word itself
-     *   Time timeframe; // When the word was added to the idea
-     *   Type type; // The type of word (noun, verb, adjective, etc.)
-     *   float likeability; // How much the Jester likes the word (0-1)
-     * ]
-     */
-    // String[] favouriteWords; // The words that the Jester likes
-    // Characteristic preferedCharacteristics; // The characteristics the Jester likes
-    /*
-     * Characteristic [
-     *   Gender gender; // What gender does the Jester like
-     *   Age age; // What age does the Jester like
-     * ]
-     */
-
-    
+    private Idea idea; // The idea that the Jester is working on
 
     public Jester(int id, String name, String seed) {
         this.id = id;
         this.name = name;
         this.seed = seed;
+        idea = new Idea(seed);
+    }
+
+    public Idea shareIdea() {
+        return idea;
+    }
+
+    /**
+     * Take in a new Idea and choose what to swap from the newIdea into the current Idea
+     * Can take a few routes:
+     *      - Swap noun/verb/prepositional phrases
+     *      - Mix subject/verb/object structure across different sentences
+     *      - If the other sentance is similar enough can merge to create a new story
+     *          - Same named entity for example
+     * @param otherIdea
+     */
+    public void takeNewIdea(Idea otherIdea) {
+
     }
     
 }
