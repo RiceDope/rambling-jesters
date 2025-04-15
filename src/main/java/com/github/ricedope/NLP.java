@@ -1,6 +1,8 @@
 package com.github.ricedope;
 
 
+import edu.stanford.nlp.ling.CoreLabel;
+import edu.stanford.nlp.ling.Word;
 import edu.stanford.nlp.pipeline.CoreDocument;
 import edu.stanford.nlp.pipeline.CoreSentence;
 import edu.stanford.nlp.trees.Tree;
@@ -91,7 +93,20 @@ public class NLP {
      * @return A string representation of the phrase
      */
     public static String phraseToString(Tree tree) {
-        return tree.yieldWords().stream().map(Object::toString).collect(Collectors.joining(" "));
+        List<Word> words = tree.yieldWords();
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < words.size(); i++) {
+            String word = words.get(i).word();
+
+            if (i > 0 && !word.equals(".")) {
+                sb.append(" ");
+            }
+
+            sb.append(word);
+        }
+
+        return sb.toString();
     }
 
     public static int[] phraseIn(ArrayList<HashMap<String, ArrayList<Tree>>> sentencePhraseMap, Phrase phraseType) {
@@ -143,10 +158,10 @@ public class NLP {
             Tree ourRandomPhrase = ourPhrases.get((int) (Math.random() * ourPhrases.size()));
             Tree externalRandomPhrase = externalPhrases.get((int) (Math.random() * externalPhrases.size()));
 
-            System.out.println("Phrase being swapped in: " + phraseToString(externalRandomPhrase));
-
             // Replace our phrase with the external phrase
             String newIdea = currentIdea.replace(phraseToString(ourRandomPhrase), phraseToString(externalRandomPhrase));
+
+            System.out.println("Subbing in this phrase: " + phraseToString(externalRandomPhrase));
 
             // Return our changed phrase
             return newIdea;
