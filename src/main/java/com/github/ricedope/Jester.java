@@ -40,6 +40,16 @@ public class Jester {
     }
 
     /**
+     * Return the first sentence that matches this Jesters current sentiment
+     * @return CoreSentence that matches this Jesters sentiment
+     */
+    public CoreSentence recommendSentence() {
+
+        return NLP.closestToSentiment(sentiment, idea.getDoc());
+
+    }
+
+    /**
      * Take in a new Idea and choose how to modify our current idea based on the new idea given
      * @param otherJester
      */
@@ -124,11 +134,31 @@ public class Jester {
 
             idea.takeNewIdea(sb.toString());
 
-        } else if (random <= 75) {
-            // Listen to the other Jester
+        } else if (random <= 75) { // Listen to the other Jester
             System.out.println("Listening to the other Jester");
-        } else {
-            // Expand the Jesters Phrase
+
+            // Get the other Jesters recomended sentence and then append it to either the end or beginning of the current sentence
+            CoreSentence recomended = otherJester.recommendSentence();
+            if (recomended == null) {
+                System.out.println("No sentences found with the same sentiment as " + otherJester.sentiment);
+                return;
+            }
+
+            StringBuilder sb = new StringBuilder();
+            int chance = (int) (Math.random() * 100);
+            if (chance < 50) {
+                // Append at the beginning
+                sb.append(recomended.text());
+                sb.append(idea.currentIdea);
+            } else {
+                // Append at the end
+                sb.append(idea.currentIdea);
+                sb.append(recomended.text());
+            }
+
+            idea.takeNewIdea(sb.toString());
+
+        } else { // Expand the Jesters Phrase by adding a whole new phrase to the end of the current idea
             System.out.println("Expanding the Jesters Phrase with");
         }
 
