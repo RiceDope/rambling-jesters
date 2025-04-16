@@ -30,7 +30,7 @@ public class Idea {
         this.currentIdea = seed;
 
         // Set up the pipeline for Stanford CoreNLP
-        props.setProperty("annotators", "tokenize,pos,lemma,ner,parse,depparse"); // REMOVED: ,coref,kbp,quote
+        props.setProperty("annotators", "tokenize,pos,lemma,ner,parse,depparse,sentiment"); // REMOVED: ,coref,kbp,quote
         props.setProperty("coref.algorithm", "neural");
         pipeline = new StanfordCoreNLP(props);
 

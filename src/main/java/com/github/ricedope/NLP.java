@@ -178,5 +178,92 @@ public class NLP {
         int randomIndex = (int) (Math.random() * phrases.length);
         return phrases[randomIndex];
     }
+
+    /**
+     * Attempts to find a sentence that is close to our given sentiment score
+     * If it cannot then it returns null
+     * 
+     * Close is defined as one either side for neutral
+     * If any kind of negative will look soley for a negative score
+     * If any kind of positive will look soley for a positive score
+     * @param sentiment The sentiment score 1-5 that we are looking for
+     * @param otherDoc The CoreDocument object that we wish to search through
+     * @return The closest sentence to the sentiment score or null if none is found
+     */
+    public static CoreSentence closestToSentiment(int sentiment, CoreDocument otherDoc) {
+        // Tally up the sentiment scores as a number in an ArrayList
+        // Look for a sentence that is either the same sentiment or close
+        // To do this find the number that is 1 either side of the sentiment score
+        // If not close then ignore and return null
+        // Will prefer a sentiment score that is more like their personality
+        // neutral (Either side)
+        // Negative: Will prefer Very Negative or Negative scores
+        // Positive: Will do the same as above
+        ArrayList<Integer> sentimentScores = new ArrayList<>();
+        for (CoreSentence sentence : otherDoc.sentences() ){
+
+            sentimentScores.add(sentimentScoreNumbers(sentence.sentiment()));
+
+        }
+
+        // Where is our current sentiment score
+        switch(sentiment) {
+            case 1:
+            case 2:
+                // Look for a Negative sentiment score
+                for (Integer score : sentimentScores) {
+                    if (score == 1 || score == 2) {
+                        return otherDoc.sentences().get(sentimentScores.indexOf(score));
+                    }
+                }
+                break;
+            case 4:
+            case 5:
+                // Look for a Positive sentiment score
+                for (Integer score : sentimentScores) {
+                    if (score == 4 || score == 5) {
+                        return otherDoc.sentences().get(sentimentScores.indexOf(score));
+                    }
+                }
+                break;
+            default:
+                // Look for a Neutral, Positive or Negative sentiment score
+                for (Integer score : sentimentScores) {
+                    if (score == 2 || score == 3 || score == 4) {
+                        return otherDoc.sentences().get(sentimentScores.indexOf(score));
+                    }
+                }
+                break;
+        }
+
+        // If we have not found a sentence that is close to the sentiment score then return null
+        return null;
+
+    }
+
+    /**
+     * Convert the sentiment score of CoreNLP sentiment to a number 1-5
+     * 1 = Very Negative
+     * 5 = Very positive
+     * @param sentiment The sentiment score that comes out of the function
+     * @return A number 1 through 5
+     */
+    public static int sentimentScoreNumbers(String sentiment) {
+        // Switch statement to detect the sentiment
+        switch (sentiment) {
+            case "Very Negative":
+                return 1;
+            case "Negative":
+                return 2;
+            case "Neutral":
+                return 3;
+            case "Positive":
+                return 4;
+            case "Very Positive":
+                return 5;
+            default:
+                return 0; // Default case if sentiment is not recognized
+        }
+    }
     
 }

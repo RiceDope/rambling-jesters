@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import edu.stanford.nlp.pipeline.CoreDocument;
+import edu.stanford.nlp.pipeline.CoreSentence;
 import edu.stanford.nlp.trees.Tree;
 
 /**
@@ -16,6 +17,7 @@ public class Jester {
     private String name; // Name of the Jester (Randomly assigned at runtime)
     private String seed; // Stored as an array of tokens
     private Idea idea; // The idea that the Jester is working on
+    public int sentiment = ((int) (Math.random()*5)+1); // Sentiment of the Jester 1-5 (1 being very negative and 5 being very positive)
     public float personalityIndex = (float) Math.random() % 1; // Number 0-1 depending on the range they are more likely to choose a certain idea
 
     public Jester(int id, String name, String seed) {
@@ -98,9 +100,30 @@ public class Jester {
                 System.out.println("New Idea Being taken: " + newIdea);
             }
 
-        } else if (random <= 55) {
-            // Personality
+        } else if (random <= 55) { // Personality
             System.out.println("Using personality to adjust idea with");
+
+            // Jester will select the sentence from the other Jester that most closey matches their personality
+            CoreSentence closest = NLP.closestToSentiment(sentiment, otherJester.shareIdea().getDoc());
+            if (closest == null) {
+                System.out.println("No sentences found with the same sentiment as " + sentiment);
+                return;
+            }
+
+            StringBuilder sb = new StringBuilder();
+            int chance = (int) (Math.random() * 100);
+            if (chance < 50) {
+                // Append at the beginning
+                sb.append(closest.text());
+                sb.append(idea.currentIdea);
+            } else {
+                // Append at the end
+                sb.append(idea.currentIdea);
+                sb.append(closest.text());
+            }
+
+            idea.takeNewIdea(sb.toString());
+
         } else if (random <= 75) {
             // Listen to the other Jester
             System.out.println("Listening to the other Jester");

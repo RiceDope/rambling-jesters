@@ -21,46 +21,29 @@ public class Main {
 
         JesterFactory jf = new JesterFactory("src/main/resources/a-tale-of-two-cities.txt");
         Jester us = jf.newJester();
+        Jester them = jf.newJester();
 
-        System.out.println("Original Paragraph:\n" + us.shareIdea().currentIdea + "\n\n");
-
-        System.out.println("-------\nBeginning Jester Creation\n--------");
-
-        // Create our array of Jesters
-        ArrayList<Jester> jesterList = new ArrayList<>();
-        for (int i = 0; i<15; i++) {
-            jesterList.add(jf.newJester());
-            System.out.println("Jester " + i + " has been created");
+        CoreSentence closest = NLP.closestToSentiment(us.sentiment, them.shareIdea().getDoc());
+        if (closest == null) {
+            System.out.println("No sentences found with the same sentiment as " + us.sentiment);
+            return;
         }
 
-        System.out.println("-------\nJester Creation Complete\n--------");
-
-        System.out.println("-------\nBeginning Jester Interaction\n--------");
-
-        for (Jester jes : jesterList){
-            // Get parse tree of our new Idea
-            CoreDocument newDoc = jes.shareIdea().getDoc();
-            ArrayList<HashMap<String, ArrayList<Tree>>> sentencePhraseMap = NLP.parseParagraph(newDoc);
-
-            // Get the parse tree of the original idea
-            CoreDocument originalDoc = us.shareIdea().getDoc();
-            ArrayList<HashMap<String, ArrayList<Tree>>> originalSentencePhraseMap = NLP.parseParagraph(originalDoc);
-
-            // Now allow the swapping of a random style of phrase
-            Phrase randomPhrase = NLP.randomPhrase();
-            String newIdea = NLP.swapAPhrase(originalSentencePhraseMap, sentencePhraseMap, randomPhrase, us.shareIdea().currentIdea);
-
-            // Adjust the new Idea based on what was selected
-            if (newIdea.equals("")){
-                System.out.println("No new idea was created, no similar " + randomPhrase.getLabel() + " found");
-            } else {
-                us.shareIdea().takeNewIdea(newIdea);
-                System.out.println("New Idea Being taken: " + newIdea);
-            }
+        StringBuilder sb = new StringBuilder();
+        int chance = (int) (Math.random() * 100);
+        if (chance < 50) {
+            // Append at the beginning
+            sb.append(closest.text());
+            sb.append(us.shareIdea().currentIdea);
+        } else {
+            // Append at the end
+            sb.append(us.shareIdea().currentIdea);
+            sb.append(closest.text());
         }
 
-        System.out.println("-------\nJester Interaction Complete\n--------");
+        us.shareIdea().takeNewIdea(sb.toString());
 
-        System.out.println("Final Idea: " + us.shareIdea().currentIdea);
+
+
     }
 }
