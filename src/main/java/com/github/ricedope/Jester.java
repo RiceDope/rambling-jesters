@@ -160,6 +160,24 @@ public class Jester {
 
         } else { // Expand the Jesters Phrase by adding a whole new phrase to the end of the current idea
             System.out.println("Expanding the Jesters Phrase with");
+
+            CoreDocument doc = otherJester.shareIdea().getDoc();
+            int amountSentences = doc.sentences().size();
+
+            int randomSentence = (int) (Math.random() * amountSentences); // Random number between 0 and amount of sentences in the document
+            CoreSentence sentenceSelected = doc.sentences().get(randomSentence); // Get the random sentence
+
+            StringBuilder sb = new StringBuilder();
+            int chance = (int) (Math.random() * 100);
+            if (chance < 50) {
+                // Append at the beginning
+                sb.append(sentenceSelected.text());
+                sb.append(idea.currentIdea);
+            } else {
+                // Append at the end
+                sb.append(idea.currentIdea);
+                sb.append(sentenceSelected.text());
+            }
         }
 
     }

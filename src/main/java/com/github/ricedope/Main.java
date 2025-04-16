@@ -14,6 +14,12 @@ public class Main {
     
     public static void main(String[] args) {
 
+        /*
+         
+PROMPT:
+Please review the following text and return only the corrected version within quotation marks. Do not change the order of any non-duplicated phrases. Remove all duplicated phrases. Correct grammar and punctuation as needed to ensure the sentence flows naturally. Add connector words (e.g., and, but, then) only where necessary for fluidity. Do not include any explanation or extra output—only the revised text in quotation marks.
+         */
+
         // String response = Llama3Client.requester("Generate 100 names for a virtual agent called a Jester. Please only repond in the format 'name, name, name, ...' do not include any other text in the response");
         // System.out.println(response);
 
@@ -21,29 +27,18 @@ public class Main {
 
         JesterFactory jf = new JesterFactory("src/main/resources/a-tale-of-two-cities.txt");
         Jester us = jf.newJester();
-        Jester them = jf.newJester();
-
-        CoreSentence closest = NLP.closestToSentiment(us.sentiment, them.shareIdea().getDoc());
-        if (closest == null) {
-            System.out.println("No sentences found with the same sentiment as " + us.sentiment);
-            return;
+        
+        ArrayList<Jester> jesters = new ArrayList<Jester>();
+        for (int i = 0; i < 15; i++) {
+            Jester j = jf.newJester();
+            jesters.add(j);
         }
 
-        StringBuilder sb = new StringBuilder();
-        int chance = (int) (Math.random() * 100);
-        if (chance < 50) {
-            // Append at the beginning
-            sb.append(closest.text());
-            sb.append(us.shareIdea().currentIdea);
-        } else {
-            // Append at the end
-            sb.append(us.shareIdea().currentIdea);
-            sb.append(closest.text());
+        for (Jester j : jesters) {
+            us.growIdea(j);
         }
 
-        us.shareIdea().takeNewIdea(sb.toString());
-
-
-
+        System.out.println("Original Idea:\n" + us.getSeed());
+        System.out.println("Final Idea:\n" + us.shareIdea().currentIdea);
     }
 }
