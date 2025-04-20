@@ -1,5 +1,7 @@
 package com.github.ricedope;
 
+import com.github.ricedope.Logger;
+
 public class Main {
     
     public static void main(String[] args) {
@@ -14,6 +16,7 @@ public class Main {
          * gridsize: The size of the grid that the Jesters will interact on
          * minimumpassagelength: The minimum length of the passage each Jester starts with
          * interactions: The number of interactions the Jester will have with other Jesters
+         * logginglevel: The level of logging to be used
          */
 
         String seedtext = "src/main/resources/a-tale-of-two-cities.txt";
@@ -24,20 +27,28 @@ public class Main {
         int gridsize = 10;
         int minimumpassagelength = 250;
         int interactions = 100;
+        Logger.logLevel = Logger.loggingLevel.FEW;
 
+        Logger.logprogress("Creating Jester factory...");
         JesterFactory jf = new JesterFactory(seedtext, minimumpassagelength, jesternames);
+        Logger.logprogress("Created Jester factory");
+        Logger.logprogress("Creating plane...");
         Plane plane = new Plane(gridsize, jesters, jf);
+        Logger.logprogress("Created plane");
+        Logger.logprogress("Initiating interactions...");
         for (int i = 0; i < interactions; i++) {
             plane.interactionLoop();
             plane.regenerateGrid();
         }
+        Logger.logprogress("Finished interactions");
 
-        System.out.println("Original Idea:\n" + plane.getSeed() + "\n\n");
+        Logger.logimportant("Original Idea:\n" + plane.getSeed() + "\n\n");
         String finalIdea = plane.getCurrentIdea();
-        System.out.println("Final Idea:\n" + finalIdea + "\n\n");
+        Logger.logimportant("Final Idea:\n" + finalIdea + "\n\n");
 
+        Logger.logprogress("Final idea found. Sending to LLM for correction...");
         String response = Llama3Client.requester(llmprompt + "[" +finalIdea + "]", llmtimeout);
-        System.out.println("Transformed output:\n" + response);
+        Logger.logimportant("Transformed output:\n" + response);
 
 
     }

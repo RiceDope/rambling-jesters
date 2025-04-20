@@ -148,7 +148,7 @@ public class Plane {
                             // Add to an ArrayList of close Jesters
                             for (Jester j : grid[cx][cy]) {
                                 if (!visited.contains(j)) {
-                                    System.out.println("Found a close Jester: ");
+                                    Logger.logexchanges("Found a close Jester: ");
                                     closeJesters.add(j);
                                 }
                             }

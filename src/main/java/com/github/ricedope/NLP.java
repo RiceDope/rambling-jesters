@@ -161,8 +161,6 @@ public class NLP {
             // Replace our phrase with the external phrase
             String newIdea = currentIdea.replace(phraseToString(ourRandomPhrase), phraseToString(externalRandomPhrase));
 
-            System.out.println("Subbing in this phrase: " + phraseToString(externalRandomPhrase));
-
             // Return our changed phrase
             return newIdea;
 

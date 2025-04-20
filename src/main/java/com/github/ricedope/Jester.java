@@ -88,7 +88,7 @@ public class Jester {
         int random = (int) (Math.random() * 100); // Random number between 0 and 100
 
         if (random <= 35) { // Swap a phrase
-            System.out.println("Swapping a phrase");
+            Logger.logexchanges("Swapping a phrase");
 
             // Get parse tree of our new Idea
             CoreDocument newDoc = otherJester.shareIdea().getDoc();
@@ -104,19 +104,19 @@ public class Jester {
 
             // Adjust the new Idea based on what was selected
             if (newIdea.equals("")){
-                System.out.println("No new idea was created, no similar " + randomPhrase.getLabel() + " found");
+                Logger.logexchanges("No new idea was created, no similar " + randomPhrase.getLabel() + " found");
             } else {
                 idea.takeNewIdea(newIdea);
-                System.out.println("New Idea Being taken: " + newIdea);
+                Logger.logexchanges("New Idea Being taken: " + newIdea);
             }
 
         } else if (random <= 55) { // Personality
-            System.out.println("Using personality to adjust idea with");
+            Logger.logexchanges("Using personality to adjust idea with");
 
             // Jester will select the sentence from the other Jester that most closey matches their personality
             CoreSentence closest = NLP.closestToSentiment(sentiment, otherJester.shareIdea().getDoc());
             if (closest == null) {
-                System.out.println("No sentences found with the same sentiment as " + sentiment);
+                Logger.logexchanges("No sentences found with the same sentiment as " + sentiment);
                 return;
             }
 
@@ -135,12 +135,12 @@ public class Jester {
             idea.takeNewIdea(sb.toString());
 
         } else if (random <= 75) { // Listen to the other Jester
-            System.out.println("Listening to the other Jester");
+            Logger.logexchanges("Listening to the other Jester");
 
             // Get the other Jesters recomended sentence and then append it to either the end or beginning of the current sentence
             CoreSentence recomended = otherJester.recommendSentence();
             if (recomended == null) {
-                System.out.println("No sentences found with the same sentiment as " + otherJester.sentiment);
+                Logger.logexchanges("No sentences found with the same sentiment as " + otherJester.sentiment);
                 return;
             }
 
@@ -159,7 +159,7 @@ public class Jester {
             idea.takeNewIdea(sb.toString());
 
         } else { // Expand the Jesters Phrase by adding a whole new phrase to the end of the current idea
-            System.out.println("Expanding the Jesters Phrase with");
+            Logger.logexchanges("Expanding the Jesters Phrase with");
 
             CoreDocument doc = otherJester.shareIdea().getDoc();
             int amountSentences = doc.sentences().size();
@@ -179,7 +179,5 @@ public class Jester {
                 sb.append(sentenceSelected.text());
             }
         }
-
     }
-    
 }

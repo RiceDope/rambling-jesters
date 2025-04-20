@@ -31,10 +31,10 @@ public class Llama3Client {
             pb.inheritIO(); // optional: pipe Ollama logs to your console
             pb.start();
             Thread.sleep(5000); // give it a few seconds to boot up
-            System.out.println("Ollama started returning to main process");
+            Logger.logprogress("Ollama started returning to main process");
             return true;
         } catch (IOException | InterruptedException e) {
-            System.err.println("Error starting Ollama: " + e.getMessage());
+            Logger.logimportant("Error starting Ollama: " + e.getMessage());
             return false;
         }
     }
@@ -63,7 +63,7 @@ public class Llama3Client {
         try {
             json = mapper.writeValueAsString(jsonMap);
         } catch (IOException e) {
-            System.err.println("Error: " + e.getMessage());
+            Logger.logimportant("Error: " + e.getMessage());
             return null;
         }
 
@@ -76,7 +76,7 @@ public class Llama3Client {
         // Send the request
         try (Response response = client.newCall(request).execute()) {
             if (!response.isSuccessful()) {
-                System.err.println("Error: " + response.code());
+                Logger.logimportant("Error: " + response.code());
                 return null;
             }
 
@@ -86,7 +86,7 @@ public class Llama3Client {
             Map<String, Object> result = mapper.readValue(responseBody, Map.class);
             return (String) result.get("response");
         } catch (IOException e) {
-            System.err.println("Error: " + e.getMessage());
+            Logger.logimportant("Error: " + e.getMessage());
             return null;
         }
 
