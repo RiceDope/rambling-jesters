@@ -29,12 +29,15 @@ public class Main {
         int interactions = 100;
         Logger.logLevel = Logger.loggingLevel.FEW;
 
+        // Create JesterFactory and Plane Objects
         Logger.logprogress("Creating Jester factory...");
         JesterFactory jf = new JesterFactory(seedtext, minimumpassagelength, jesternames);
         Logger.logprogress("Created Jester factory");
         Logger.logprogress("Creating plane...");
         Plane plane = new Plane(gridsize, jesters, jf);
         Logger.logprogress("Created plane");
+
+        // Begin the interaction loop
         Logger.logprogress("Initiating interactions...");
         for (int i = 0; i < interactions; i++) {
             plane.interactionLoop();
@@ -42,12 +45,11 @@ public class Main {
         }
         Logger.logprogress("Finished interactions");
 
-        Logger.logimportant("Original Idea:\n" + plane.getSeed() + "\n\n");
+        // Retrieve the final idea from the plane and sent it to the LLM for final correction
         String finalIdea = plane.getCurrentIdea();
-        Logger.logimportant("Final Idea:\n" + finalIdea + "\n\n");
-
         Logger.logprogress("Final idea found. Sending to LLM for correction...");
         String response = Llama3Client.requester(llmprompt + "[" +finalIdea + "]", llmtimeout);
+        Logger.logimportant("Original Idea:\n" + plane.getSeed() + "\n\n");
         Logger.logimportant("Transformed output:\n" + response);
 
 

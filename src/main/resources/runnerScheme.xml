@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<!--XML SCHEMA defining all of the data that must be passed to the program in order to run-->
+
+<!--ENUM STYLE data for the logger level enum-->
+<xs:simpleType name="loggerlevel">
+    <xs:restriction base="xs:string">
+        <xs:enumeration value="ALL"/>
+        <xs:enumeration value="NONE"/>
+        <xs:enumeration value="SOME"/>
+        <xs:enumeration value="F"/>
+    </xs:restriction>
+</xs:simpleType>
+
+<!--XML SCHEMA begins here-->
+<xs:element name="runner">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element name="seedtext" type="xs:string"/>
+            <xs:element name="jesternames" type="xs:string"/>
+            <xs:element name="llmprompt" type="xs:string"/>
+            <xs:element name="llmtimeout" type="xs:int"/>
+            <xs:element name="jesters" type="xs:int"/>
+            <xs:element name="gridsize" type="xs:int"/>
+            <xs:element name="minimumpassagelength" type="xs:int"/>
+            <xs:element name="interactions" type="xs:int"/>
+            <xs:element name="loggerlevel" type="loggerlevel"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:element>
+</xs:schema>
