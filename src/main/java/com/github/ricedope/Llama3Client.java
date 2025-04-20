@@ -21,10 +21,7 @@ public class Llama3Client {
 
     // Connection values
     private static final String API_URL = "http://localhost:11434/api/generate";
-    private static final OkHttpClient client = new OkHttpClient.Builder()
-            .connectTimeout(Duration.ofSeconds(30))
-            .readTimeout(Duration.ofSeconds(600))
-            .build();
+    private static OkHttpClient client;
 
     private static final ObjectMapper mapper = new ObjectMapper();
 
@@ -48,7 +45,12 @@ public class Llama3Client {
      * @return The response from the model
      */
     @SuppressWarnings("unchecked")
-    public static String requester(String prompt) {
+    public static String requester(String prompt, int timeout) {
+
+        client = new OkHttpClient.Builder()
+            .connectTimeout(Duration.ofSeconds(30))
+            .readTimeout(Duration.ofSeconds(timeout))
+            .build();
 
         // Map for request
         Map<String, Object> jsonMap = new HashMap<>();

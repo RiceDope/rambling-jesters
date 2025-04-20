@@ -30,15 +30,16 @@ public class JesterFactory {
      * Constructor for the JesterFactory class
      * @param path Path to then gutenburg .txt file to use
      * @param minimumPassageLength Minimum length of the passage to be used
+     * @param jesterNames Path to the .csv file containing the names of the Jesters
      */
-    public JesterFactory(String path, int minimumPassageLength) {
+    public JesterFactory(String path, int minimumPassageLength, String jesterNames) {
         // Prepare the text for assignment
         textCorpus = TextPreProcessor.finalCleanupForNLP(TextPreProcessor.removeChapterNamesAndLeadingContents(TextPreProcessor.snipGutenbergStartAndEnd(TextPreProcessor.readFile(path))));
         // Split the text into passages
         String[] rawpassages = textCorpus.split("\\n\\s*\\n");
         passages = new ArrayList<>(Arrays.asList(rawpassages));
         // Read names in from a CSV file
-        String[] rawNames = TextPreProcessor.simpleCSVReader("src/main/resources/Jester-Names.csv");
+        String[] rawNames = TextPreProcessor.simpleCSVReader(jesterNames);
         names = new ArrayList<>(Arrays.asList(rawNames));
         // Set minimum passage length and cleanse the text available
         this.minimumPassageLength = minimumPassageLength;
@@ -54,7 +55,7 @@ public class JesterFactory {
         int id = getNewId();
         String name = getNewName();
         String seed = getNewPassage();
-        if (seed.length() < 250) {
+        if (seed.length() < minimumPassageLength) {
             // If the passage is too short, get a new one
             seed = getNewPassage();
         }
