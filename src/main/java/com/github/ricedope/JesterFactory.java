@@ -24,12 +24,14 @@ public class JesterFactory {
     private String textCorpus;
     private ArrayList<String> passages;
     private ArrayList<String> names;
+    private int minimumPassageLength;
 
     /**
      * Constructor for the JesterFactory class
      * @param path Path to then gutenburg .txt file to use
+     * @param minimumPassageLength Minimum length of the passage to be used
      */
-    public JesterFactory(String path) {
+    public JesterFactory(String path, int minimumPassageLength) {
         // Prepare the text for assignment
         textCorpus = TextPreProcessor.finalCleanupForNLP(TextPreProcessor.removeChapterNamesAndLeadingContents(TextPreProcessor.snipGutenbergStartAndEnd(TextPreProcessor.readFile(path))));
         // Split the text into passages
@@ -38,6 +40,9 @@ public class JesterFactory {
         // Read names in from a CSV file
         String[] rawNames = TextPreProcessor.simpleCSVReader("src/main/resources/Jester-Names.csv");
         names = new ArrayList<>(Arrays.asList(rawNames));
+        // Set minimum passage length and cleanse the text available
+        this.minimumPassageLength = minimumPassageLength;
+        cleansePassages();
     }
 
     /**
@@ -54,6 +59,27 @@ public class JesterFactory {
             seed = getNewPassage();
         }
         return new Jester(id, name, seed);
+    }
+
+    /**
+     * The total number of possible Jesters that can be created based on the names available and the text corpus
+     * @return
+     */
+    public int possibleJesters() {
+        if (names.size() > passages.size()) {
+            return passages.size();
+        } else {
+            return names.size();
+        }
+    }
+
+    /**
+     * Remove passages that violate the minimum passage length
+     * No maximum passage length is set, but minimum is set at construction
+     */
+    private void cleansePassages() {
+        // Remove passages that are too short
+        passages.removeIf(passage -> passage.length() < minimumPassageLength);
     }
 
     /**

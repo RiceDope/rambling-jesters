@@ -23,7 +23,7 @@ public class Llama3Client {
     private static final String API_URL = "http://localhost:11434/api/generate";
     private static final OkHttpClient client = new OkHttpClient.Builder()
             .connectTimeout(Duration.ofSeconds(30))
-            .readTimeout(Duration.ofSeconds(240))
+            .readTimeout(Duration.ofSeconds(600))
             .build();
 
     private static final ObjectMapper mapper = new ObjectMapper();

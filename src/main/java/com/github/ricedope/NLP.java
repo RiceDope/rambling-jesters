@@ -266,4 +266,20 @@ public class NLP {
         }
     }
     
+    /**
+     * Send a string off to a running llama3 model and get a response back
+     * Default timeout: 5 minutes.
+     * Prompt:  Please review the following text and return only the corrected version within quotation marks. 
+     *          Do not change the order of any non-duplicated phrases. Remove all duplicated phrases. Correct 
+     *          grammar and punctuation as needed to ensure the sentence flows naturally. Add connector words 
+     *          (e.g., and, but, then) only where necessary for fluidity. Do not include any explanation or 
+     *          extra output—only the revised text in quotation marks. [**Your prompt text**]
+     * @param finalIdea The final output string from the Jester
+     * @return Final transformed output from the llama3 model
+     */
+    public static String tidyupParagraph(String finalIdea) {
+        String NLPPrompt = "Please review the following text and return only the corrected version within quotation marks. Do not change the order of any non-duplicated phrases. Remove all duplicated phrases. Correct grammar and punctuation as needed to ensure the sentence flows naturally. Add connector words (e.g., and, but, then) only where necessary for fluidity. Do not include any explanation or extra output—only the revised text in quotation marks.";
+        String response = Llama3Client.requester(NLPPrompt + "[" + finalIdea + "]");
+        return response;
+    }
 }
