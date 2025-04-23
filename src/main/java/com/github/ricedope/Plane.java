@@ -14,7 +14,7 @@ public class Plane {
 
     private Jester baseJester;
     private ArrayList<Jester> jesters = new ArrayList<Jester>();
-    private ArrayList<Jester>[][] grid;
+    private Jester[][] grid;
     private ArrayList<Jester> visited = new ArrayList<Jester>();
     private Coordinate bjCoord;
     
@@ -30,50 +30,100 @@ public class Plane {
             throw new IllegalArgumentException("Number of Jesters must be less than the number of possible Jesters.");
         }
 
-        grid = (ArrayList<Jester>[][]) new ArrayList[gridSize][gridSize];
+        grid = new Jester[gridSize][gridSize];
         this.baseJester = jf.newJester(); // Create the base Jester
         // Populate the Array of Jesters
         for (int i = 0; i < jesters-1; i++) {
             this.jesters.add(jf.newJester());
         }
 
-        for (int i = 0; i < gridSize; i++) {
-            for (int j = 0; j < gridSize; j++) {
-                grid[i][j] = new ArrayList<Jester>();
-            }
-        }
-
         // Place the base Jester in the middle of the grid
         int mid = gridSize / 2;
-        grid[mid][mid].add(baseJester);
+        grid[mid][mid] = baseJester;
         bjCoord = new Coordinate(mid, mid);
 
         // Place the other Jesters randomly on the grid
         for (Jester j : this.jesters) {
             int x = (int) (Math.random() * gridSize);
             int y = (int) (Math.random() * gridSize);
-            grid[x][y].add(j);
+
+            placeJester(j, x, y);
+            
         }
+    }
+
+    /**
+     * Attempts to place a Jester on the grid at the specified location. If the location is already occupied look at the spaces around
+     * @param j
+     * @param targetX
+     * @param targetY
+     */
+    public void placeJester(Jester j, int targetX, int targetY) {
+
+        // Check if we can place on target location
+        if (grid[targetX][targetY] != null) {
+            // First get the bounds we are allowed to check within +1 on x and +1 on y of our target
+            int minx;
+            int maxx;
+            int miny;
+            int maxy;
+            if (targetX - 1 < 0) {
+                minx = 0;
+            } else {
+                minx = targetX - 1;
+            }
+            if (targetX + 1 > grid.length - 1) {
+                maxx = grid.length - 1;
+            } else {
+                maxx = targetX + 1;
+            }
+            if (targetY - 1 < 0) {
+                miny = 0;
+            } else {
+                miny = targetY - 1;
+            }
+            if (targetY + 1 > grid.length - 1) {
+                maxy = grid.length - 1;
+            } else {
+                maxy = targetY + 1;
+            }
+
+            // Check in a spiral pattern around the target location based on max and min values to look for a null location
+            for (int y = maxy; y >= miny; y--) {
+                for (int x = minx; x <= maxx; x++) {
+                    if (grid[x][y] == null) {
+                        grid[x][y] = j;
+                        return; // Place the Jester and exit the method
+                    }
+                }
+            }
+        } else {
+            grid[targetX][targetY] = j;
+        }
+
+        
     }
 
     public void regenerateGrid() {
         // Regenerate the grid and place the Jesters randomly on it
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[i].length; j++) {
-                grid[i][j].clear();
+                grid[i][j] = null;
             }
         }
 
         // Place the base Jester in the middle of the grid
         int mid = grid.length / 2;
-        grid[mid][mid].add(baseJester);
+        grid[mid][mid] = baseJester;
         bjCoord = new Coordinate(mid, mid);
 
         // Place the other Jesters randomly on the grid
         for (Jester j : this.jesters) {
             int x = (int) (Math.random() * grid.length);
             int y = (int) (Math.random() * grid.length);
-            grid[x][y].add(j);
+            
+            placeJester(j, x, y);
+
         }
 
         // Visited list not cleared as this is used to move Jesters around
@@ -84,91 +134,78 @@ public class Plane {
         // If the closest unvisited neighbor is more than gridSize/3 steps away, visit the closest one regardless of if they are visited or not
         // If there are no unvisited neighbors, the Jester will clear its visited list and start over
 
-        // First check if we currently have anyone around us
-        if (grid[bjCoord.getX()][bjCoord.getY()].size() > 1) {
-            // If we do then interact with them
-            ArrayList<Jester> thisLoc = grid[bjCoord.getX()][bjCoord.getY()];
-            for (Jester j : thisLoc) {
-                if (j != baseJester) {
-                    // Interact with the Jester
-                    baseJester.growIdea(j);
-                }
-            }
+        
+        // If we have nobody in our coordinate
+        // Now check if we have any neighbours around that are unvisited and visit one of them
+
+        // Check the grid surrounding the baseJester
+        // Outer loop will do y
+        // Inner loop will do x
+        // First check if we will go out of the grid
+
+        int x = bjCoord.getX();
+        int y = bjCoord.getY();
+
+        int maxX;
+        int minX;
+
+        int maxY;
+        int minY;
+
+        if (x + grid.length/3 > grid.length) {
+            maxX = grid.length-1;
+            minX = x - grid.length/3;
+        } else if ( x - grid.length/3 < 0) {
+            maxX = x + grid.length/3;
+            minX = 0;
         } else {
-            // If we have nobody in our coordinate
-            // Now check if we have any neighbours around that are unvisited and visit one of them
+            maxX = x + grid.length/3;
+            minX = x - grid.length/3;
+        }
 
-            // Check the grid surrounding the baseJester
-            // Outer loop will do y
-            // Inner loop will do x
-            // First check if we will go out of the grid
+        if (y + grid.length/3 > grid.length) {
+            minY = y - grid.length/3;
+            maxY = grid.length-1;
+        } else if ( y - grid.length/3 < 0) {
+            maxY = y + grid.length/3;
+            minY = 0;
+        } else {
+            maxY = y + grid.length/3;
+            minY = y - grid.length/3;
+        }
 
-            int x = bjCoord.getX();
-            int y = bjCoord.getY();
-
-            int maxX;
-            int minX;
-
-            int maxY;
-            int minY;
-
-            if (x + grid.length/3 > grid.length) {
-                maxX = grid.length-1;
-                minX = x - grid.length/3;
-            } else if ( x - grid.length/3 < 0) {
-                maxX = x + grid.length/3;
-                minX = 0;
-            } else {
-                maxX = x + grid.length/3;
-                minX = x - grid.length/3;
-            }
-
-            if (y + grid.length/3 > grid.length) {
-                minY = y - grid.length/3;
-                maxY = grid.length-1;
-            } else if ( y - grid.length/3 < 0) {
-                maxY = y + grid.length/3;
-                minY = 0;
-            } else {
-                maxY = y + grid.length/3;
-                minY = y - grid.length/3;
-            }
-
-            // Now we have the bounds of the grid we can check
-            // The grid will be checked from minX, maxY to maxX, minY
-            // Moving sequentially to the right and then down
-            ArrayList<Jester> closeJesters = new ArrayList<Jester>();
-            for (int cy = maxY; cy > minY; cy--) {
-                for (int cx = minX; cx < maxX; cx++) {
-                    // Check if the coordinate has a Jester on it
-                    if (grid[cx][cy].size() > 0) {
-                        if (grid[cx][cy].get(0) == baseJester) {
-                            continue; // Skip the base Jester
-                        } else {
-                            // Add to an ArrayList of close Jesters
-                            for (Jester j : grid[cx][cy]) {
-                                if (!visited.contains(j)) {
-                                    Logger.logexchanges("Found a close Jester: ");
-                                    closeJesters.add(j);
-                                }
-                            }
+        // Now we have the bounds of the grid we can check
+        // The grid will be checked from minX, maxY to maxX, minY
+        // Moving sequentially to the right and then down
+        ArrayList<Jester> closeJesters = new ArrayList<Jester>();
+        for (int cy = maxY; cy > minY; cy--) {
+            for (int cx = minX; cx < maxX; cx++) {
+                // Check if the coordinate has a Jester on it
+                if (grid[cx][cy] != null) {
+                    if (grid[cx][cy] == baseJester) {
+                        continue; // Skip the base Jester
+                    } else {
+                        if (!visited.contains(grid[cx][cy])) {
+                            Logger.logexchanges("Found a close Jester: ");
+                            closeJesters.add(grid[cx][cy]);
                         }
                     }
                 }
             }
-
-            // Now randomly choose one of the Jesters that are close
-            if (closeJesters.size() > 0) {
-                // Choose a random Jester from the list of close Jesters
-                int randIndex = (int) (Math.random() * closeJesters.size());
-                Jester chosenJester = closeJesters.get(randIndex);
-                // Interact with the chosen Jester
-                baseJester.growIdea(chosenJester);
-            } else {
-                // If there are no unvisited neighbours, clear the visited list and start over
-                visited.clear();
-            }
         }
+
+        // Now randomly choose one of the Jesters that are close
+        if (closeJesters.size() > 0) {
+            // Choose a random Jester from the list of close Jesters
+            int randIndex = (int) (Math.random() * closeJesters.size());
+            Jester chosenJester = closeJesters.get(randIndex);
+            // Interact with the chosen Jester
+            baseJester.growIdea(chosenJester);
+        } else {
+            // If there are no unvisited neighbours, clear the visited list and start over
+            visited.clear();
+        }
+        
     }
 
     public String getSeed() {

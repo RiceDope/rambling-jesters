@@ -26,8 +26,8 @@ public class Main {
         int jesters = 15;
         int gridsize = 10;
         int minimumpassagelength = 250;
-        int interactions = 100;
-        Logger.logLevel = Logger.loggingLevel.FEW;
+        int interactions = 15;
+        Logger.logLevel = Logger.loggingLevel.ALL;
 
         // Create JesterFactory and Plane Objects
         Logger.logprogress("Creating Jester factory...");
