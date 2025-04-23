@@ -25,17 +25,18 @@ public class Llama3Client {
 
     private static final ObjectMapper mapper = new ObjectMapper();
 
-    public static boolean startup() {
+    /**
+     * Start the ollama server with no model running
+     * @return The process that the ollama server is running on (null if error)
+     */
+    public static Process startup() {
         try {
-            ProcessBuilder pb = new ProcessBuilder("ollama", "serve");
-            pb.inheritIO(); // optional: pipe Ollama logs to your console
-            pb.start();
-            Thread.sleep(5000); // give it a few seconds to boot up
-            Logger.logprogress("Ollama started returning to main process");
-            return true;
-        } catch (IOException | InterruptedException e) {
-            Logger.logimportant("Error starting Ollama: " + e.getMessage());
-            return false;
+            ProcessBuilder pb = new ProcessBuilder("cmd.exe", "/c", "start", "ollama", "serve");
+            pb.inheritIO();
+            return pb.start();
+        } catch (IOException e) {
+            Logger.logerror("Error starting the server: " + e.getMessage());
+            return null;
         }
     }
 
@@ -57,6 +58,7 @@ public class Llama3Client {
         jsonMap.put("model", "llama3");
         jsonMap.put("prompt", prompt);
         jsonMap.put("stream", false);
+        jsonMap.put("keep_alive", "0m");
 
         // Map as Json
         String json;
@@ -90,5 +92,13 @@ public class Llama3Client {
             return null;
         }
 
+    }
+
+    public static void wait(int timeframe) {
+        try {
+            Thread.sleep(timeframe*1000);
+        } catch (InterruptedException e) {
+            Logger.logimportant("Error waiting " + e.getMessage());
+        }
     }
 }

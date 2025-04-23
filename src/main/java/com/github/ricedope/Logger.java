@@ -33,7 +33,7 @@ public class Logger {
      */
     public static void logprogress(String message) {
         if (logLevel == loggingLevel.SOME || logLevel == loggingLevel.ALL || logLevel == loggingLevel.FEW) {
-            System.out.println(message);
+            System.out.println("\n[Progress] " + message);
         }
     }
 
@@ -44,7 +44,7 @@ public class Logger {
      */
     public static void logexchanges(String message) {
         if (logLevel == loggingLevel.ALL || logLevel == loggingLevel.SOME) {
-            System.out.println("\n[Jester exchange]" + message);
+            System.out.println("\n[Jester exchange] " + message);
         }
     }
 
@@ -54,9 +54,7 @@ public class Logger {
      * @param message
      */
     public static void logimportant(String message) {
-        if (logLevel == loggingLevel.NONE || logLevel == loggingLevel.SOME || logLevel == loggingLevel.ALL || logLevel == loggingLevel.FEW) {
-            System.out.println("\n[IMPORTANT] " + message);
-        }
+        System.out.println("\n[IMPORTANT] " + message);
     }
 
     /**
@@ -67,6 +65,10 @@ public class Logger {
         if (logLevel == loggingLevel.ALL) {
             System.out.println("\n[MISC] " + message);
         }
+    }
+
+    public static void logerror(String message) {
+        System.out.println("\n[ERROR] " + message);
     }
 
 }

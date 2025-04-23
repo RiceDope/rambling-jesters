@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<runner xmlns:xsi="http://www.w3.org/2001/XMLSchema" xsi:noNamespaceSchemaLocation="runnerScheme.xsd">
+    <seedtext>src/main/resources/a-tale-of-two-cities.txt</seedtext>
+    <jesternames>src/main/resources/Jester-Names.csv</jesternames>
+    <llmprompt>
+        Please review the following text and return only the corrected version within quotation marks. Do not change the order of any non-duplicated phrases. Remove all duplicated phrases. Correct grammar and punctuation as needed to ensure the sentence flows naturally. Add connector words (e.g., and, but, then) only where necessary for fluidity. Do not include any explanation or extra output—only the revised text in quotation marks.
+    </llmprompt>
+    <llmtimeout>600</llmtimeout>
+    <jesters>15</jesters>
+    <gridsize>10</gridsize>
+    <minimumpassagelength>250</minimumpassagelength>
+    <interactions>10</interactions>
+</runner>
