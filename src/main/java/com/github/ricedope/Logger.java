@@ -32,9 +32,7 @@ public class Logger {
      * @param message
      */
     public static void logprogress(String message) {
-        if (logLevel == loggingLevel.SOME || logLevel == loggingLevel.ALL || logLevel == loggingLevel.FEW) {
-            System.out.println("\n[Progress] " + message);
-        }
+        System.out.println(ANSI.GREEN_BACKGROUND + "[Progress] "  + "" + ANSI.RESET + message);
     }
 
     /**
@@ -44,7 +42,7 @@ public class Logger {
      */
     public static void logexchanges(String message) {
         if (logLevel == loggingLevel.ALL || logLevel == loggingLevel.SOME) {
-            System.out.println("\n[Jester exchange] " + message);
+            System.out.println("[Jester exchange] " + message);
         }
     }
 
@@ -54,7 +52,7 @@ public class Logger {
      * @param message
      */
     public static void logimportant(String message) {
-        System.out.println("\n[IMPORTANT] " + message);
+        System.out.println(ANSI.YELLOW_BACKGROUND + "[IMPORTANT] " + "" + ANSI.RESET + message );
     }
 
     /**
@@ -63,12 +61,33 @@ public class Logger {
      */
     public static void logmisc(String message) {
         if (logLevel == loggingLevel.ALL) {
-            System.out.println("\n[MISC] " + message);
+            System.out.println("[MISC] " + message);
         }
     }
 
+    /**
+     * For logging errors that occur in the system
+     * @param message
+     */
     public static void logerror(String message) {
-        System.out.println("\n[ERROR] " + message);
+        System.out.println(ANSI.RED_BACKGROUND + "[ERROR] " + "" + ANSI.RESET + message);
     }
 
+    /**
+     * Clears the console screen based on the debugging level
+     * Only clear when we are not really debugging just seeing the system progress
+     */
+    public static void clearConsole() {
+        if (logLevel == loggingLevel.NONE || logLevel == loggingLevel.FEW) {
+            try {
+                if (System.getProperty("os.name").contains("Windows")) {
+                    new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+                } else {
+                    new ProcessBuilder("clear").inheritIO().start().waitFor();
+                }
+            } catch (Exception e) {
+                System.out.println("Error clearing console: " + e.getMessage());
+            }
+        }
+    }
 }

@@ -5,8 +5,6 @@ import java.util.Scanner;
 
 import javax.swing.JFileChooser;
 
-import com.github.ricedope.Logger;
-
 import nu.xom.Builder;
 import nu.xom.Document;
 import nu.xom.Element;
@@ -15,41 +13,75 @@ public class Main {
     
     public static void main(String[] args) {
         // Manually set the logging level for the testing phase
-        Logger.logLevel = Logger.loggingLevel.ALL;
+        Logger.logLevel = Logger.loggingLevel.NONE;
 
         // Ask the user if they would like to supply their own XML file or would like to use the default
-        Scanner scanner = new Scanner(System.in);
         String filepath; // The path to the XML file to use
 
-        System.out.println("Would you like to specify your own XML file? (y/n)?");
-        String choice = scanner.nextLine().toUpperCase();
+        // Pre-defined text to show to the user
+        String titleMessage = ANSI.RED_BACKGROUND + "==================================" + ANSI.RESET + "\n"  + ANSI.RED_BACKGROUND + "=" + ANSI.RESET + ANSI.GREEN + "        Rambling Jesters        " + ANSI.RESET  + "" + ANSI.RED_BACKGROUND + "=" + ANSI.RESET + "\n" + ANSI.RED_BACKGROUND + "==================================" + ANSI.RESET;
+        String choiceMessage = """
+        Welcome to the Rambling Jesters project!
+        The goal of the program is to harness Co-Creativity in order to create new ideas and stories with existing material
+        The program will exit on completion of a set of Jester interactions, or if an error occurs.
+        Press ctrl + c to force exit the program at any time.
+        Select one of the following five options:
+        1. Use a pre-created XML file (You will be prompted to select a file)
+        2. Use the default XML file (No extra setup required)
+        3. Create a new XML file (You will be taken step by step to make a new XML file)
+        4. Exit the program (Closes down)
+        5. Help! (Shows this message again with more information)
+        """;
 
-        switch(choice) {
-            case "Y":
-                System.out.println("Please select the path to the XML file when the dialogue pops up. (SPACE)");
-                scanner.nextLine();
-                JFileChooser chooser = new JFileChooser();
-                int result = chooser.showOpenDialog(null);
+        boolean programLoop = true;
+        while (programLoop) {
+            Scanner scanner = new Scanner(System.in);
+            Logger.clearConsole();
+            System.out.println(titleMessage + "\n" + choiceMessage);
+            System.out.println(">>>");
+            String choice = scanner.nextLine().toUpperCase();
 
-                if (result == JFileChooser.APPROVE_OPTION) {
-                    filepath = chooser.getSelectedFile().getAbsolutePath();
-                    Logger.logprogress("Using XML file: " + filepath);
-                } else {
-                    Logger.logerror("No file selected. Using default XML file.");
+            switch(choice) {
+                case "1":
+                    System.out.println("Please select the path to the XML file when the dialogue pops up. (SPACE)");
+                    scanner.nextLine();
+                    JFileChooser chooser = new JFileChooser();
+                    int result = chooser.showOpenDialog(null);
+                    if (result == JFileChooser.APPROVE_OPTION) {
+                        filepath = chooser.getSelectedFile().getAbsolutePath();
+                        Logger.logprogress("Using XML file: " + filepath);
+                        runMainProgram(filepath);
+                    } else {
+                        Logger.logerror("No file selected. Using default XML file.");
+                        System.exit(0);
+                        break;
+                    }
+                    break;
+                case "2":
+                    Logger.logprogress("Using default XML file.");
                     filepath = "src/main/resources/default.xml";
-                }
-                break;
-            case "N":
-                Logger.logprogress("Using default XML file.");
-                filepath = "src/main/resources/default.xml";
-                break;
-            default:
-                Logger.logerror("Invalid input. Using default XML file.");
-                filepath = "src/main/resources/default.xml";
-                break;
+                    runMainProgram(filepath);
+                    break;
+                case "3":
+                    Logger.logprogress("Creating new XML file...");
+                    filepath ="";
+                    break;
+                case "4":
+                    Logger.logprogress("Exiting program...");
+                    System.exit(0);
+                    break;
+                default:
+                    Logger.logerror("Invalid input. Not a recognised option.");
+                    break;
+            }
         }
+    }
 
-        scanner.close();
+    /**
+     * Given a filepath run the main rambling-jesters program
+     * @param filepath
+     */
+    public static void runMainProgram(String filepath) {
         Logger.logprogress("Using XML file: " + filepath);
 
         // Load the XML file
@@ -62,7 +94,7 @@ public class Main {
             Document doc = builder.build(runnerData);
             root = doc.getRootElement();
         } catch (Exception e) {
-            Logger.logprogress("Error loading XML file: " + e.getMessage());
+            Logger.logerror("Error loading XML file: " + e.getMessage());
             System.exit(0);
             return;
         }
@@ -73,16 +105,16 @@ public class Main {
         // Load the individual components from the XML file
 
         /*
-         * Customisable runtime parameters
-         * seedtext: The .txt file to be used a source material for the Jesters to use
-         * jesternames: The .csv file to be used as a source for the names of the Jesters (One line csv file)
-         * llmprompt: The prompt to be used for the LLM model. (recommended to use the default)
-         * llmtimeout: The timeout for the LLM model to respond (In seconds)
-         * jesters: The number of Jesters to be created (must be less than the number of possible Jesters)
-         * gridsize: The size of the grid that the Jesters will interact on
-         * minimumpassagelength: The minimum length of the passage each Jester starts with
-         * interactions: The number of interactions the Jester will have with other Jesters
-         */
+        * Customisable runtime parameters
+        * seedtext: The .txt file to be used a source material for the Jesters to use
+        * jesternames: The .csv file to be used as a source for the names of the Jesters (One line csv file)
+        * llmprompt: The prompt to be used for the LLM model. (recommended to use the default)
+        * llmtimeout: The timeout for the LLM model to respond (In seconds)
+        * jesters: The number of Jesters to be created (must be less than the number of possible Jesters)
+        * gridsize: The size of the grid that the Jesters will interact on
+        * minimumpassagelength: The minimum length of the passage each Jester starts with
+        * interactions: The number of interactions the Jester will have with other Jesters
+        */
 
         String seedtext;
         String jesternames;
@@ -128,6 +160,7 @@ public class Main {
         // Begin the interaction loop
         Logger.logprogress("Initiating interactions (Can take some time) ...");
         for (int i = 0; i < interactions; i++) {
+            Logger.logprogress("Interaction" + (i+1) + "/" + interactions);
             plane.interactionLoop();
             plane.regenerateGrid();
         }
@@ -145,9 +178,14 @@ public class Main {
         Llama3Client.wait(5);
         String response = Llama3Client.requester(llmprompt + "[" +finalIdea + "]", llmtimeout);
 
+        Logger.clearConsole();
+
         Logger.logprogress("Original Idea:\n" + seed + "\n\n");
         Logger.logprogress("Transformed output:\n" + response);
 
         p.destroy(); // Destroy the process to free up memory
+
+        // Exit the program to allow reading of the output text
+        System.exit(0);
     }
 }

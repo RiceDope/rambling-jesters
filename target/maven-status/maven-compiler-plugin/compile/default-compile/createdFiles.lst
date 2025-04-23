@@ -1,0 +1,13 @@
+com\github\ricedope\Llama3Client.class
+com\github\ricedope\Jester.class
+com\github\ricedope\ANSI.class
+com\github\ricedope\Idea.class
+com\github\ricedope\JesterFactory.class
+com\github\ricedope\Plane.class
+com\github\ricedope\TextPreProcessor.class
+com\github\ricedope\Coordinate.class
+com\github\ricedope\Main.class
+com\github\ricedope\NLP.class
+com\github\ricedope\Logger.class
+com\github\ricedope\Logger$loggingLevel.class
+com\github\ricedope\Phrase.class
