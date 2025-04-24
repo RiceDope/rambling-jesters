@@ -1,13 +1,17 @@
 package com.github.ricedope;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.Scanner;
 
 import javax.swing.JFileChooser;
 
+import nu.xom.Attribute;
 import nu.xom.Builder;
 import nu.xom.Document;
 import nu.xom.Element;
+import nu.xom.Serializer;
 
 public class Main {
     
@@ -36,7 +40,10 @@ public class Main {
         boolean programLoop = true;
         while (programLoop) {
             Scanner scanner = new Scanner(System.in);
+
             Logger.clearConsole();
+            Logger.logLevel = Logger.loggingLevel.NONE; // Set the logging level to NONE to avoid cluttering the console
+
             System.out.println(titleMessage + "\n" + choiceMessage);
             System.out.println(">>>");
             String choice = scanner.nextLine().toUpperCase();
@@ -65,16 +72,154 @@ public class Main {
                 case "3":
                     Logger.logprogress("Creating new XML file...");
                     filepath ="";
+                    createNewXMLFile();
+                    System.exit(0);
                     break;
                 case "4":
                     Logger.logprogress("Exiting program...");
                     System.exit(0);
+                    break;
+                case "5":
+                    Logger.logLevel = Logger.loggingLevel.ALL; // Set the logging level to ALL to stop console clearning when showing help
+                    System.out.println("THIS WILL BE THE HELP MESSAGE");
                     break;
                 default:
                     Logger.logerror("Invalid input. Not a recognised option.");
                     break;
             }
         }
+    }
+
+    public static void createNewXMLFile() {
+
+        Logger.clearConsole();
+        System.out.println("Welcome to the XML file creation tool!");
+        System.out.println("We will create a new XML file step by step then allow you to add it to the program.");
+        System.out.println("All files are available on the github project at: ");
+        System.out.println("https://github.com/RiceDope/rambling-jesters");
+        Element root = new Element("runner");
+        root.addNamespaceDeclaration("xsi", "http://www.w3.org/2001/XMLSchema-instance");
+
+        // Select the seedtext file
+        System.out.println("Please select the path to the seedtext file (This is recommended to be a .txt from the gutenberg project)");
+        JFileChooser chooser = new JFileChooser();
+        String seedtextpath;
+        int result = chooser.showOpenDialog(null);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            seedtextpath = chooser.getSelectedFile().getAbsolutePath();
+            Element seedtext = new Element("seedtext");
+            seedtext.appendChild(seedtextpath);
+            root.appendChild(seedtext);
+            Logger.logprogress("Seed text selected: " + seedtextpath);
+        } else {
+            Logger.logerror("No file selected. Exiting program");
+            System.exit(0);
+        }
+
+        // Select the jesernames file
+        System.out.println("Please select the path to the jesternames file (This is recommended to be a .csv file with all names on one line)");
+        chooser = new JFileChooser();
+        String jesternamespath;
+        result = chooser.showOpenDialog(null);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            jesternamespath = chooser.getSelectedFile().getAbsolutePath();
+            Element jesternames = new Element("jesternames");
+            jesternames.appendChild(jesternamespath);
+            root.appendChild(jesternames);
+            Logger.logprogress("Jester names selected: " + jesternamespath);
+        } else {
+            Logger.logerror("No file selected. Exiting program");
+            System.exit(0);
+        }
+
+        // Type a prompt for the LLM model to use:
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Please type a prompt for the LLM model to use (Recommended to use the default): ");
+        System.out.println("To use default, type <default>");
+        String llmprompt = scanner.nextLine();
+        if (llmprompt.equals("<default>")) {
+            llmprompt = "Please review the following text and return only the corrected version within quotation marks. Do not change the order of any non-duplicated phrases. Remove all duplicated phrases. Correct grammar and punctuation as needed to ensure the sentence flows naturally. Add connector words (e.g., and, but, then) only where necessary for fluidity. Do not include any explanation or extra output—only the revised text in quotation marks.";
+        } else {
+            Logger.logprogress("LLM prompt selected: " + llmprompt);
+        }
+        Element llmpromptElement = new Element("llmprompt");
+        llmpromptElement.appendChild(llmprompt);
+        root.appendChild(llmpromptElement);
+
+        // Select the LLM timeout
+        System.out.println("Please type the timeout for the LLM model to use. For slower machines this should be higher 600 secs");
+        System.out.println("This is how long the program will await a response from the local running llama3 model before giving up.");
+        String llmtimeoutString = scanner.nextLine();
+        Element llmtimeoutElement = new Element("llmtimeout");
+        llmtimeoutElement.appendChild(llmtimeoutString);
+        root.appendChild(llmtimeoutElement);
+
+        // Select the number of Jesters to create
+        System.out.println("Please type the number of Jesters to create. This should be less than the number of possible Jesters.");
+        System.out.println("This is the number of Jesters that will be created and used in the program.");
+        String jestersString = scanner.nextLine();
+        Element jestersElement = new Element("jesters");
+        jestersElement.appendChild(jestersString);
+        root.appendChild(jestersElement);
+
+        // Select the gridsize
+        System.out.println("Please type the size of the grid to use. This is the size of the grid that the Jesters will interact on.");
+        System.out.println("The grid will be nxn in size. On each interaction the Base Jester will look in a gridsize/3 radius around them.");
+        String gridsizeString = scanner.nextLine();
+        Element gridsizeElement = new Element("gridsize");
+        gridsizeElement.appendChild(gridsizeString);
+        root.appendChild(gridsizeElement);
+
+        // Minimum passage length
+        System.out.println("Please type the minimum passage length to use. This is the minimum length of the passage each Jester starts with.");
+        System.out.println("This is recommended to be 250 characters for reasonable results.");
+        String minimumpassagelengthString = scanner.nextLine();
+        Element minimumpassagelengthElement = new Element("minimumpassagelength");
+        minimumpassagelengthElement.appendChild(minimumpassagelengthString);
+        root.appendChild(minimumpassagelengthElement);
+
+        // Select the number of interactions
+        System.out.println("Please type the number of interactions to use. This is the number of interactions the Jester will have with other Jesters.");
+        System.out.println("100 generates reasonable results, however if your PC is slower then this may crash or take upwards of 15 minutes.");
+        String interactionsString = scanner.nextLine();
+        Element interactionsElement = new Element("interactions");
+        interactionsElement.appendChild(interactionsString);
+        root.appendChild(interactionsElement);
+
+        // Select a new directory to save the XML file to
+        chooser = new JFileChooser();
+        // Set mode to directories only
+        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        // Optional: Disable "All Files" filter
+        chooser.setAcceptAllFileFilterUsed(false);
+        result = chooser.showOpenDialog(null);
+        File selectedDirectory;
+        if (result == JFileChooser.APPROVE_OPTION) {
+            selectedDirectory = chooser.getSelectedFile();
+            System.out.println("Selected path: " + selectedDirectory.getAbsolutePath());
+
+            System.out.println("Now please name your running file. (No spaces or special characters)");
+            String filename = scanner.nextLine();
+
+            Document doc = new Document(root);
+            try {
+                OutputStream os = new FileOutputStream(selectedDirectory.getAbsolutePath()+"\\"+filename+".xml");
+                Serializer serializer = new Serializer(os, "UTF-8");
+                serializer.setIndent(4);
+                serializer.write(doc);
+                serializer.flush();
+                os.close();
+            } catch (Exception e) {
+                Logger.logerror("Error creating XML file: " + e.getMessage());
+                System.exit(0);
+            }
+        } else {
+            Logger.logerror("No selection made. Exiting program");
+            System.exit(0);
+        }
+        
+        Logger.logprogress("XML file created successfully");
+
     }
 
     /**
