@@ -14,7 +14,7 @@ As a pre-requisite make sure that [llama3](https://ollama.com/library/llama3) is
 This project was made on and for Windows, it may work on other operating systems but I have not tested.
 
 ## Launching
-There are a few methods of running the program that will be presented upon launch. If compiling from maven run this command (In PowerShell):
+There are a few methods of running the program that will be presented upon launch. Due to GitHub jar filesize limits I cannot supply a jar alongside this project at the moment so you will have to download the maven and run from there:
 ```
 mvn clean compile assembly:single
 ```

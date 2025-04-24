@@ -3,11 +3,12 @@ package com.github.ricedope;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.net.URI;
 import java.util.Scanner;
+import java.awt.Desktop;
 
 import javax.swing.JFileChooser;
 
-import nu.xom.Attribute;
 import nu.xom.Builder;
 import nu.xom.Document;
 import nu.xom.Element;
@@ -34,7 +35,7 @@ public class Main {
         2. Use the default XML file (No extra setup required)
         3. Create a new XML file (You will be taken step by step to make a new XML file)
         4. Exit the program (Closes down)
-        5. Help! (Shows this message again with more information)
+        5. Help! (Opens up the README.md file in your browser)
         """;
 
         boolean programLoop = true;
@@ -73,15 +74,22 @@ public class Main {
                     Logger.logprogress("Creating new XML file...");
                     filepath ="";
                     createNewXMLFile();
-                    System.exit(0);
                     break;
                 case "4":
                     Logger.logprogress("Exiting program...");
                     System.exit(0);
                     break;
                 case "5":
-                    Logger.logLevel = Logger.loggingLevel.ALL; // Set the logging level to ALL to stop console clearning when showing help
-                    System.out.println("THIS WILL BE THE HELP MESSAGE");
+                    try {
+                        URI uri = new URI("https://github.com/RiceDope/rambling-jesters/blob/main/README.md");
+                        if (Desktop.isDesktopSupported()) {
+                            Desktop.getDesktop().browse(uri);
+                        } else {
+                            System.out.println("Desktop not supported");
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     break;
                 default:
                     Logger.logerror("Invalid input. Not a recognised option.");
@@ -102,6 +110,7 @@ public class Main {
 
         // Select the seedtext file
         System.out.println("Please select the path to the seedtext file (This is recommended to be a .txt from the gutenberg project)");
+        System.out.println("A selection window should show. If not visible please alt + tab to find it");
         JFileChooser chooser = new JFileChooser();
         String seedtextpath;
         int result = chooser.showOpenDialog(null);
@@ -118,6 +127,7 @@ public class Main {
 
         // Select the jesernames file
         System.out.println("Please select the path to the jesternames file (This is recommended to be a .csv file with all names on one line)");
+        System.out.println("A selection window should show. If not visible please alt + tab to find it");
         chooser = new JFileChooser();
         String jesternamespath;
         result = chooser.showOpenDialog(null);
@@ -139,6 +149,7 @@ public class Main {
         String llmprompt = scanner.nextLine();
         if (llmprompt.equals("<default>")) {
             llmprompt = "Please review the following text and return only the corrected version within quotation marks. Do not change the order of any non-duplicated phrases. Remove all duplicated phrases. Correct grammar and punctuation as needed to ensure the sentence flows naturally. Add connector words (e.g., and, but, then) only where necessary for fluidity. Do not include any explanation or extra output—only the revised text in quotation marks.";
+            Logger.logprogress("LLM prompt selected: " + llmprompt);
         } else {
             Logger.logprogress("LLM prompt selected: " + llmprompt);
         }
@@ -153,6 +164,7 @@ public class Main {
         Element llmtimeoutElement = new Element("llmtimeout");
         llmtimeoutElement.appendChild(llmtimeoutString);
         root.appendChild(llmtimeoutElement);
+        Logger.logprogress("LLM timeout selected: " + llmtimeoutString);
 
         // Select the number of Jesters to create
         System.out.println("Please type the number of Jesters to create. This should be less than the number of possible Jesters.");
@@ -161,6 +173,7 @@ public class Main {
         Element jestersElement = new Element("jesters");
         jestersElement.appendChild(jestersString);
         root.appendChild(jestersElement);
+        Logger.logprogress("Number of Jesters selected: " + jestersString);
 
         // Select the gridsize
         System.out.println("Please type the size of the grid to use. This is the size of the grid that the Jesters will interact on.");
@@ -169,6 +182,7 @@ public class Main {
         Element gridsizeElement = new Element("gridsize");
         gridsizeElement.appendChild(gridsizeString);
         root.appendChild(gridsizeElement);
+        Logger.logprogress("Grid size selected: " + gridsizeString);
 
         // Minimum passage length
         System.out.println("Please type the minimum passage length to use. This is the minimum length of the passage each Jester starts with.");
@@ -177,6 +191,7 @@ public class Main {
         Element minimumpassagelengthElement = new Element("minimumpassagelength");
         minimumpassagelengthElement.appendChild(minimumpassagelengthString);
         root.appendChild(minimumpassagelengthElement);
+        Logger.logprogress("Minimum passage length selected: " + minimumpassagelengthString);
 
         // Select the number of interactions
         System.out.println("Please type the number of interactions to use. This is the number of interactions the Jester will have with other Jesters.");
@@ -185,7 +200,10 @@ public class Main {
         Element interactionsElement = new Element("interactions");
         interactionsElement.appendChild(interactionsString);
         root.appendChild(interactionsElement);
+        Logger.logprogress("Number of interactions selected: " + interactionsString);
 
+        System.out.println("Now please select a directory to save the XML file to.");
+        System.out.println("A selection window should show. If not visible please alt + tab to find it");
         // Select a new directory to save the XML file to
         chooser = new JFileChooser();
         // Set mode to directories only
