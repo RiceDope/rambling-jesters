@@ -1,0 +1,42 @@
+# Maven output
+/target/
+
+# Eclipse / IntelliJ / NetBeans IDE files
+*.iml
+.idea/
+*.ipr
+*.iws
+*.bak
+*.swp
+.classpath
+.project
+.settings/
+nbproject/
+
+# OS junk files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Ignore all JAR files
+*.jar
+
+# Maven wrapper files (optional)
+.mvn/
+!/.mvn/wrapper/maven-wrapper.jar
+mvnw
+mvnw.cmd
+
+# Ignore generated files
+*.class
+
+# Ignore coverage/report/test output
+/coverage/
+.surefire-*
+/test-output/
+jacoco.exec
+
+# VS Code settings (optional)
+.vscode/
