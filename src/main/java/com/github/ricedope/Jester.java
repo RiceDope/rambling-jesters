@@ -19,6 +19,7 @@ public class Jester {
     private Idea idea; // The idea that the Jester is working on
     public int sentiment = ((int) (Math.random()*5)+1); // Sentiment of the Jester 1-5 (1 being very negative and 5 being very positive)
     public float personalityIndex = (float) Math.random() % 1; // Number 0-1 depending on the range they are more likely to choose a certain idea
+    private ArrayList<String> takenPhrases;
 
     public Jester(int id, String name, String seed) {
         this.id = id;
@@ -62,6 +63,10 @@ public class Jester {
      * @param otherJester
      */
     public void growIdea(Jester otherJester) {
+
+        if (takenPhrases == null) {
+            takenPhrases = new ArrayList<String>();
+        }
 
         /*
          * Firstly decide how to operate when listening to the new idea
@@ -108,10 +113,11 @@ public class Jester {
 
             // Now allow the swapping of a random style of phrase
             Phrase randomPhrase = NLP.randomPhrase();
-            String newIdea = NLP.swapAPhrase(originalSentencePhraseMap, sentencePhraseMap, randomPhrase, idea.currentIdea);
+
+            String newIdea = NLP.swapAPhrase(originalSentencePhraseMap, sentencePhraseMap, randomPhrase, idea.currentIdea, takenPhrases);
 
             // Adjust the new Idea based on what was selected
-            if (newIdea.equals("")){
+            if (newIdea.equals("") || newIdea.equals(null)){
                 Logger.logexchanges("No new idea was created, no similar " + randomPhrase.getLabel() + " found");
             } else {
                 idea.takeNewIdea(newIdea);
@@ -140,7 +146,16 @@ public class Jester {
                 sb.append(closest.text());
             }
 
-            idea.takeNewIdea(sb.toString());
+            String ideaToTake = sb.toString();
+
+            if (takenPhrases.contains(ideaToTake)) {
+                Logger.logexchanges("Already taken this idea: " + ideaToTake);
+                return;
+            } else {
+                takenPhrases.add(ideaToTake);
+            }
+
+            idea.takeNewIdea(ideaToTake);
 
         } else if (random <= 75) { // Listen to the other Jester
             Logger.logexchanges("Listening to the other Jester");
@@ -164,7 +179,16 @@ public class Jester {
                 sb.append(recomended.text());
             }
 
-            idea.takeNewIdea(sb.toString());
+            String ideaToTake = sb.toString();
+
+            if (takenPhrases.contains(ideaToTake)) {
+                Logger.logexchanges("Already taken this idea: " + ideaToTake);
+                return;
+            } else {
+                takenPhrases.add(ideaToTake);
+            }
+
+            idea.takeNewIdea(ideaToTake);
 
         } else { // Expand the Jesters Phrase by adding a whole new phrase to the end of the current idea
             Logger.logexchanges("Expanding the Jesters Phrase with");
@@ -186,6 +210,17 @@ public class Jester {
                 sb.append(idea.currentIdea);
                 sb.append(sentenceSelected.text());
             }
+
+            String ideaToTake = sb.toString();
+
+            if (takenPhrases.contains(ideaToTake)) {
+                Logger.logexchanges("Already taken this idea: " + ideaToTake);
+                return;
+            } else {
+                takenPhrases.add(ideaToTake);
+            }
+
+            idea.takeNewIdea(ideaToTake);
         }
     }
 }

@@ -1,18 +1,20 @@
 package com.github.ricedope;
 
 
-import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.ling.Word;
 import edu.stanford.nlp.pipeline.CoreDocument;
 import edu.stanford.nlp.pipeline.CoreSentence;
+import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import edu.stanford.nlp.trees.Tree;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Properties;
 import java.util.ArrayList;
 
 public class NLP {
+
+    public static StanfordCoreNLP pipeline = new StanfordCoreNLP(getProps());
 
     /**
      * Check if a node has a specific label
@@ -22,6 +24,13 @@ public class NLP {
      */
     private static boolean hasLabel(Tree node, String label) {
         return node.label().value().equals(label);
+    }
+
+    private static Properties getProps() {
+        Properties props = new Properties();
+        props.setProperty("annotators", "tokenize,pos,lemma,ner,parse,depparse,sentiment"); // REMOVED: ,coref,kbp,quote
+        props.setProperty("coref.algorithm", "neural");
+        return props;
     }
 
     /**
@@ -137,7 +146,7 @@ public class NLP {
      * @param currentIdea The current idea that is being worked on
      * @return The new idea with the swapped phrase or an empty string if nothing was swapped
      */
-    public static String swapAPhrase(ArrayList<HashMap<String, ArrayList<Tree>>> ourIdea, ArrayList<HashMap<String, ArrayList<Tree>>> externalIdea, Phrase toSwap, String currentIdea) {
+    public static String swapAPhrase(ArrayList<HashMap<String, ArrayList<Tree>>> ourIdea, ArrayList<HashMap<String, ArrayList<Tree>>> externalIdea, Phrase toSwap, String currentIdea, ArrayList<String> takenPhrases) {
 
         // We are all good to swap as the phrase exists
         if (phraseIn(ourIdea,toSwap).length != 0 && phraseIn(externalIdea, toSwap).length != 0) {
@@ -158,8 +167,14 @@ public class NLP {
             Tree ourRandomPhrase = ourPhrases.get((int) (Math.random() * ourPhrases.size()));
             Tree externalRandomPhrase = externalPhrases.get((int) (Math.random() * externalPhrases.size()));
 
+            // Stop the same phrase being taken twice
+            if (takenPhrases.contains(phraseToString(externalRandomPhrase))){
+                return null;
+            }
+
             // Replace our phrase with the external phrase
             String newIdea = currentIdea.replace(phraseToString(ourRandomPhrase), phraseToString(externalRandomPhrase));
+            takenPhrases.add(phraseToString(externalRandomPhrase));
 
             // Return our changed phrase
             return newIdea;

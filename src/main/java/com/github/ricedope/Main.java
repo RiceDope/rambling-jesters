@@ -330,6 +330,7 @@ public class Main {
         for (int i = 0; i < interactions; i++) {
             Logger.logprogress("Interaction" + (i+1) + "/" + interactions);
             plane.interactionLoop();
+            Logger.logprogress("Current Text: \n" + plane.getCurrentIdea());
             plane.regenerateGrid();
         }
         Logger.logprogress("Finished interactions");

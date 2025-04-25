@@ -1,7 +1,5 @@
 package com.github.ricedope;
 
-import java.util.Properties;
-
 import edu.stanford.nlp.pipeline.CoreDocument;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 
@@ -15,8 +13,7 @@ public class Idea {
     public String seed;
     public String currentIdea;
     public CoreDocument doc;
-    private Properties props = new Properties();
-    private StanfordCoreNLP pipeline;
+    private StanfordCoreNLP pipeline = NLP.pipeline;
 
 
     /**
@@ -28,11 +25,6 @@ public class Idea {
         // Set the seed and the current idea (Which is just the initial)
         this.seed = seed;
         this.currentIdea = seed;
-
-        // Set up the pipeline for Stanford CoreNLP
-        props.setProperty("annotators", "tokenize,pos,lemma,ner,parse,depparse,sentiment"); // REMOVED: ,coref,kbp,quote
-        props.setProperty("coref.algorithm", "neural");
-        pipeline = new StanfordCoreNLP(props);
 
         // Annotate the current idea using the pipeline
         doc = new CoreDocument(currentIdea);
