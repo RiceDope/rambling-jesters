@@ -50,6 +50,14 @@ public class Jester {
     }
 
     /**
+     * Return the Name of the Jester
+     * @return
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
      * Take in a new Idea and choose how to modify our current idea based on the new idea given
      * @param otherJester
      */

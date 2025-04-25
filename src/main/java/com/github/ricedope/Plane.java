@@ -215,4 +215,8 @@ public class Plane {
     public String getCurrentIdea() {
         return baseJester.shareIdea().currentIdea;
     }
+
+    public String getName() {
+        return baseJester.getName();
+    }
 }

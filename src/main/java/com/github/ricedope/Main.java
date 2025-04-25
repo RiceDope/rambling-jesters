@@ -332,6 +332,7 @@ public class Main {
         // Retrieve the final idea from the plane and sent it to the LLM for final correction
         String finalIdea = plane.getCurrentIdea();
         String seed = plane.getSeed();
+        String name = plane.getName();
         plane = null; // memory cleanup
 
         Logger.logprogress("Final idea found. Sending to LLM for correction...");
@@ -344,7 +345,7 @@ public class Main {
         Logger.clearConsole();
 
         Logger.logprogress("Original Idea:\n" + seed + "\n\n");
-        Logger.logprogress("Transformed output:\n" + response);
+        Logger.logprogress("Jester-"+name+":\n" + response);
 
         p.destroy(); // Destroy the process to free up memory
 
