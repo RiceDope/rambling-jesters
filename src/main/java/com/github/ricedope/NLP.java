@@ -14,6 +14,8 @@ import java.util.ArrayList;
 
 public class NLP {
 
+    // tokenize,ssplit,pos,parse,sentiment NEW
+    // tokenize,pos,lemma,ner,parse,depparse,sentiment OLD
     public static StanfordCoreNLP pipeline = new StanfordCoreNLP(getProps());
 
     /**
@@ -28,7 +30,7 @@ public class NLP {
 
     private static Properties getProps() {
         Properties props = new Properties();
-        props.setProperty("annotators", "tokenize,pos,lemma,ner,parse,depparse,sentiment"); // REMOVED: ,coref,kbp,quote
+        props.setProperty("annotators", "tokenize,ssplit,pos,parse,sentiment"); // REMOVED: ,coref,kbp,quote
         props.setProperty("coref.algorithm", "neural");
         return props;
     }
@@ -203,7 +205,7 @@ public class NLP {
      * @param otherDoc The CoreDocument object that we wish to search through
      * @return The closest sentence to the sentiment score or null if none is found
      */
-    public static CoreSentence closestToSentiment(int sentiment, CoreDocument otherDoc) {
+    public static CoreSentence closestToSentiment(int sentiment, List<CoreSentence> otherDoc) {
         // Tally up the sentiment scores as a number in an ArrayList
         // Look for a sentence that is either the same sentiment or close
         // To do this find the number that is 1 either side of the sentiment score
@@ -213,7 +215,7 @@ public class NLP {
         // Negative: Will prefer Very Negative or Negative scores
         // Positive: Will do the same as above
         ArrayList<Integer> sentimentScores = new ArrayList<>();
-        for (CoreSentence sentence : otherDoc.sentences() ){
+        for (CoreSentence sentence : otherDoc){
 
             sentimentScores.add(sentimentScoreNumbers(sentence.sentiment()));
 
@@ -226,7 +228,7 @@ public class NLP {
                 // Look for a Negative sentiment score
                 for (Integer score : sentimentScores) {
                     if (score == 1 || score == 2) {
-                        return otherDoc.sentences().get(sentimentScores.indexOf(score));
+                        return otherDoc.get(sentimentScores.indexOf(score));
                     }
                 }
                 break;
@@ -235,7 +237,7 @@ public class NLP {
                 // Look for a Positive sentiment score
                 for (Integer score : sentimentScores) {
                     if (score == 4 || score == 5) {
-                        return otherDoc.sentences().get(sentimentScores.indexOf(score));
+                        return otherDoc.get(sentimentScores.indexOf(score));
                     }
                 }
                 break;
@@ -243,7 +245,7 @@ public class NLP {
                 // Look for a Neutral, Positive or Negative sentiment score
                 for (Integer score : sentimentScores) {
                     if (score == 2 || score == 3 || score == 4) {
-                        return otherDoc.sentences().get(sentimentScores.indexOf(score));
+                        return otherDoc.get(sentimentScores.indexOf(score));
                     }
                 }
                 break;

@@ -46,7 +46,7 @@ public class Jester {
      */
     public CoreSentence recommendSentence() {
 
-        return NLP.closestToSentiment(sentiment, idea.getDoc());
+        return NLP.closestToSentiment(sentiment, idea.getSentences());
 
     }
 
@@ -104,12 +104,10 @@ public class Jester {
             Logger.logexchanges("Swapping a phrase");
 
             // Get parse tree of our new Idea
-            CoreDocument newDoc = otherJester.shareIdea().getDoc();
-            ArrayList<HashMap<String, ArrayList<Tree>>> sentencePhraseMap = NLP.parseParagraph(newDoc);
+            ArrayList<HashMap<String, ArrayList<Tree>>> sentencePhraseMap = otherJester.shareIdea().getDoc();
 
             // Get the parse tree of the original idea
-            CoreDocument originalDoc = idea.getDoc();
-            ArrayList<HashMap<String, ArrayList<Tree>>> originalSentencePhraseMap = NLP.parseParagraph(originalDoc);
+            ArrayList<HashMap<String, ArrayList<Tree>>> originalSentencePhraseMap = idea.getDoc();
 
             // Now allow the swapping of a random style of phrase
             Phrase randomPhrase = NLP.randomPhrase();
@@ -128,7 +126,7 @@ public class Jester {
             Logger.logexchanges("Using personality to adjust idea with");
 
             // Jester will select the sentence from the other Jester that most closey matches their personality
-            CoreSentence closest = NLP.closestToSentiment(sentiment, otherJester.shareIdea().getDoc());
+            CoreSentence closest = NLP.closestToSentiment(sentiment, otherJester.shareIdea().getSentences());
             if (closest == null) {
                 Logger.logexchanges("No sentences found with the same sentiment as " + sentiment);
                 return;
@@ -193,11 +191,10 @@ public class Jester {
         } else { // Expand the Jesters Phrase by adding a whole new phrase to the end of the current idea
             Logger.logexchanges("Expanding the Jesters Phrase with");
 
-            CoreDocument doc = otherJester.shareIdea().getDoc();
-            int amountSentences = doc.sentences().size();
+            int amountSentences = otherJester.shareIdea().getDoc().size();
 
             int randomSentence = (int) (Math.random() * amountSentences); // Random number between 0 and amount of sentences in the document
-            CoreSentence sentenceSelected = doc.sentences().get(randomSentence); // Get the random sentence
+            CoreSentence sentenceSelected = otherJester.shareIdea().getSentences().get(randomSentence); // Get the random sentence
 
             StringBuilder sb = new StringBuilder();
             int chance = (int) (Math.random() * 100);

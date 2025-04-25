@@ -1,7 +1,13 @@
 package com.github.ricedope;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import edu.stanford.nlp.pipeline.CoreDocument;
+import edu.stanford.nlp.pipeline.CoreSentence;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
+import edu.stanford.nlp.trees.Tree;
 
 /**
  * Class that contains each "idea" that a Jester has and uses NLP in order to adjust their current thinking or sentance structure
@@ -14,6 +20,8 @@ public class Idea {
     public String currentIdea;
     public CoreDocument doc;
     private StanfordCoreNLP pipeline = NLP.pipeline;
+    private ArrayList<HashMap<String, ArrayList<Tree>>> sentencePhraseMap = new ArrayList<HashMap<String, ArrayList<Tree>>>(); // Map of the sentences and the phrases that are in them
+    private List<CoreSentence> sentences = new ArrayList<CoreSentence>(); // List of the sentences that are in the document
 
 
     /**
@@ -29,6 +37,14 @@ public class Idea {
         // Annotate the current idea using the pipeline
         doc = new CoreDocument(currentIdea);
         pipeline.annotate(doc);
+
+        sentencePhraseMap = NLP.parseParagraph(doc);
+        sentences = doc.sentences();
+        doc = null;
+    }
+
+    public List<CoreSentence> getSentences() {
+        return sentences;
     }
 
     /**
@@ -40,10 +56,13 @@ public class Idea {
         // Annotate the new idea using the pipeline
         doc = new CoreDocument(currentIdea);
         pipeline.annotate(doc);
+        sentencePhraseMap = NLP.parseParagraph(doc);
+        sentences = doc.sentences();
+        doc = null;
     }
 
-    public CoreDocument getDoc() {
-        return doc;
+    public ArrayList<HashMap<String, ArrayList<Tree>>> getDoc() {
+        return sentencePhraseMap;
     }
 
     /**
