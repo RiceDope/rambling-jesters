@@ -53,6 +53,7 @@ public class Main {
                 case "1":
                     System.out.println("Please select the path to the XML file when the dialogue pops up. (SPACE)");
                     scanner.nextLine();
+                    scanner = null;
                     JFileChooser chooser = new JFileChooser();
                     int result = chooser.showOpenDialog(null);
                     if (result == JFileChooser.APPROVE_OPTION) {
@@ -237,6 +238,7 @@ public class Main {
         }
         
         Logger.logprogress("XML file created successfully");
+        scanner = null;
 
     }
 
@@ -320,6 +322,9 @@ public class Main {
         Plane plane = new Plane(gridsize, jesters, jf);
         Logger.logprogress("Created plane");
 
+        // Allow cleanup of the JesterFactory object to free up memory
+        jf = null;
+
         // Begin the interaction loop
         Logger.logprogress("Initiating interactions (Can take some time) ...");
         for (int i = 0; i < interactions; i++) {
@@ -348,6 +353,44 @@ public class Main {
         Logger.logprogress("Jester-"+name+":\n" + response);
 
         p.destroy(); // Destroy the process to free up memory
+
+        // Ask the user if they want to save the output to a text file
+        System.out.println("Would you like to save the output to a text file? (Y/N)");
+        Scanner scanner = new Scanner(System.in);
+        String saveChoice = scanner.nextLine().toUpperCase();
+        if (saveChoice.equals("Y")) {
+            System.out.println("Please select a directory to save the output to.");
+            JFileChooser chooser = new JFileChooser();
+            chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            chooser.setAcceptAllFileFilterUsed(false);
+            int result = chooser.showOpenDialog(null);
+            File selectedDirectory;
+            if (result == JFileChooser.APPROVE_OPTION) {
+                selectedDirectory = chooser.getSelectedFile();
+                System.out.println("Selected path: " + selectedDirectory.getAbsolutePath());
+                try {
+                    File outputFile = new File(selectedDirectory.getAbsolutePath() + "\\output.txt");
+                    FileOutputStream fos = new FileOutputStream(outputFile);
+                    fos.write(("Original Idea:\n" + seed + "\n\n").getBytes());
+                    fos.write(("Iterations: "+ interactions + "\n").getBytes());
+                    fos.write(("Grid Size: "+ gridsize + "\n").getBytes());
+                    fos.write(("Minimum Passage Length: "+ minimumpassagelength + "\n").getBytes());
+                    fos.write(("Jester Names: "+ jesternames + "\n").getBytes());
+                    fos.write(("LLM Prompt: "+ llmprompt + "\n").getBytes());
+                    fos.write(("LLM Timeout: "+ llmtimeout + "\n").getBytes());
+                    fos.write(("Seed Text: "+ seedtext + "\n").getBytes());
+                    fos.write(("Jester-"+name+":\n" + response).getBytes());
+                    fos.close();
+                    System.out.println("Output saved to: " + outputFile.getAbsolutePath());
+                } catch (Exception e) {
+                    Logger.logerror("Error saving output: " + e.getMessage());
+                }
+            } else {
+                Logger.logerror("No selection made. Exiting program");
+                System.exit(0);
+            }
+        }
+        scanner = null;
 
         // Exit the program to allow reading of the output text
         System.exit(0);

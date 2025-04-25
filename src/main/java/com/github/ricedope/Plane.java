@@ -37,6 +37,8 @@ public class Plane {
             this.jesters.add(jf.newJester());
         }
 
+        jf = null; // Clear the JesterFactory to free up memory
+
         // Place the base Jester in the middle of the grid
         int mid = gridSize / 2;
         grid[mid][mid] = baseJester;
