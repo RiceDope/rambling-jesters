@@ -32,7 +32,7 @@ public class Logger {
      * @param message
      */
     public static void logprogress(String message) {
-        System.out.println(ANSI.GREEN_BACKGROUND + "[Progress] "  + "" + ANSI.RESET + message);
+        System.out.println(ANSI.GREEN_BACKGROUND + "[Progress]"  + "" + ANSI.RESET +" "+ message);
     }
 
     /**
@@ -52,7 +52,7 @@ public class Logger {
      * @param message
      */
     public static void logimportant(String message) {
-        System.out.println(ANSI.YELLOW_BACKGROUND + "[IMPORTANT] " + "" + ANSI.RESET + message );
+        System.out.println(ANSI.YELLOW_BACKGROUND + "[IMPORTANT]" + "" + ANSI.RESET +" "+ message );
     }
 
     /**
@@ -70,7 +70,7 @@ public class Logger {
      * @param message
      */
     public static void logerror(String message) {
-        System.out.println(ANSI.RED_BACKGROUND + "[ERROR] " + "" + ANSI.RESET + message);
+        System.out.println(ANSI.RED_BACKGROUND + "[ERROR]" + "" + ANSI.RESET +" "+ message);
     }
 
     /**

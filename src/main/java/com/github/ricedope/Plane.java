@@ -1,6 +1,5 @@
 package com.github.ricedope;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -9,7 +8,6 @@ import java.util.ArrayList;
  * they will interact in a small grid and share ideas with the chosen base Jester.
  */
 
- @SuppressWarnings("unchecked")
 public class Plane {
 
     private Jester baseJester;

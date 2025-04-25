@@ -7,7 +7,9 @@ This project aims to bring the benefits of co-creativity to a virtual world, mod
 Fundamentally an idea in this context is taking some form of input text and splitting it up and assigning each Jester with some amount of the source text as a seed. They then interact with eachother based on their individual personalities and at the end the base Jester outputs their seed text alongside a LLM corrected final paragraph.
 
 ## Important notes before running
-When running the program if your laptop or pc is not particularly powerful then close down as much as possible and limit the number of iterations that the program will be ran. The default is 10 and more lead to a better output.
+**JVM** version: 21
+
+When running the program if your laptop or pc is not particularly powerful then close down as much as possible and limit the number of iterations that the program will be ran. The default is 10 and more lead to a better outputs.
 
 As a pre-requisite make sure that [llama3](https://ollama.com/library/llama3) is installed alongside [ollama](https://ollama.com/). These are used for the LLM correction phase. (More on that later)
 
@@ -40,6 +42,11 @@ When creating your own XML file to be ran you need two pre-requisite files a txt
 - jesters: The total number of jesters that will interact on the plane. This does not include the base jester. Generally I would go for gridSize/10. So whatever you set as the gridsize take a tenth of that and that will be your jester number. Never select more Jesters than your text can handle. If you have 100 Jester names but only 50 eligible paragraphs to assign then you can only have 49 jesters with one base jester.
 - gridsize: The size of the grid that the jesters will interact on. Each index can hold one jester. So the max of a 10 gridsize plane is 100 jesters.
 - minimumpassagelength: The minimum amount of characters per passage given to a jester. Given a long piece of text it will split it into paragraphs. It splits on the \n\n of the text so make sure that your minimum size is not too big.
+- maximumpassagelength: The max size any single idea is allowed to be. This is only taken into account after the generation phase as ideas progress to become bigger.
 - interactions: The total number of times that the jesters will attempt to share ideas.
 
 If all of these are ok then you can run the program and generate a unique output based on the input text. They can seem abstract or nonsensical but will be almost entirely novel creations based around authors works or a combination of authors.
+
+## How does it all work
+
+Coming soon

@@ -3,7 +3,6 @@ package com.github.ricedope;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import edu.stanford.nlp.pipeline.CoreDocument;
 import edu.stanford.nlp.pipeline.CoreSentence;
 import edu.stanford.nlp.trees.Tree;
 
@@ -13,16 +12,16 @@ import edu.stanford.nlp.trees.Tree;
 
 public class Jester {
 
-    private int id; // Give a unique ID based on when the Jester was created (1 through 50)
     private String name; // Name of the Jester (Randomly assigned at runtime)
     private String seed; // Stored as an array of tokens
     private Idea idea; // The idea that the Jester is working on
     public int sentiment = ((int) (Math.random()*5)+1); // Sentiment of the Jester 1-5 (1 being very negative and 5 being very positive)
     public float personalityIndex = (float) Math.random() % 1; // Number 0-1 depending on the range they are more likely to choose a certain idea
     private ArrayList<String> takenPhrases;
+    private int maximumpassagelength;
 
-    public Jester(int id, String name, String seed) {
-        this.id = id;
+    public Jester(String name, String seed, int maximumpassagelength) {
+        this.maximumpassagelength = maximumpassagelength;
         this.name = name;
         this.seed = seed;
         idea = new Idea(seed);
@@ -115,9 +114,15 @@ public class Jester {
             String newIdea = NLP.swapAPhrase(originalSentencePhraseMap, sentencePhraseMap, randomPhrase, idea.currentIdea, takenPhrases);
 
             // Adjust the new Idea based on what was selected
-            if (newIdea.equals("") || newIdea.equals(null)){
+            if (newIdea == null || newIdea.equals("")){
                 Logger.logexchanges("No new idea was created, no similar " + randomPhrase.getLabel() + " found");
             } else {
+
+                // Check if we violate maximum passage length
+                if (newIdea.length() >= maximumpassagelength) {
+                    Logger.logexchanges("New idea is too long: " + newIdea);
+                    return;
+                }
                 idea.takeNewIdea(newIdea);
                 Logger.logexchanges("New Idea Being taken: " + newIdea);
             }
@@ -146,13 +151,18 @@ public class Jester {
 
             String ideaToTake = sb.toString();
 
-            if (takenPhrases.contains(ideaToTake)) {
-                Logger.logexchanges("Already taken this idea: " + ideaToTake);
+            if (takenPhrases.contains(closest.text())) {
+                Logger.logexchanges("Already taken this idea: " + closest.text());
                 return;
             } else {
-                takenPhrases.add(ideaToTake);
+                takenPhrases.add(closest.text());
             }
 
+            // Check if we violate maximum passage length
+            if (ideaToTake.length() >= maximumpassagelength) {
+                Logger.logexchanges("New idea is too long: " + ideaToTake);
+                return;
+            }
             idea.takeNewIdea(ideaToTake);
 
         } else if (random <= 75) { // Listen to the other Jester
@@ -179,11 +189,17 @@ public class Jester {
 
             String ideaToTake = sb.toString();
 
-            if (takenPhrases.contains(ideaToTake)) {
-                Logger.logexchanges("Already taken this idea: " + ideaToTake);
+            if (takenPhrases.contains(recomended.text())) {
+                Logger.logexchanges("Already taken this idea: " + recomended.text());
                 return;
             } else {
-                takenPhrases.add(ideaToTake);
+                takenPhrases.add(recomended.text());
+            }
+
+            // Check if we violate maximum passage length
+            if (ideaToTake.length() >= maximumpassagelength) {
+                Logger.logexchanges("New idea is too long: " + ideaToTake);
+                return;
             }
 
             idea.takeNewIdea(ideaToTake);
@@ -210,11 +226,17 @@ public class Jester {
 
             String ideaToTake = sb.toString();
 
-            if (takenPhrases.contains(ideaToTake)) {
-                Logger.logexchanges("Already taken this idea: " + ideaToTake);
+            if (takenPhrases.contains(sentenceSelected.text())) {
+                Logger.logexchanges("Already taken this idea: " + sentenceSelected.text());
                 return;
             } else {
-                takenPhrases.add(ideaToTake);
+                takenPhrases.add(sentenceSelected.text());
+            }
+
+            // Check if we violate maximum passage length
+            if (ideaToTake.length() >= maximumpassagelength) {
+                Logger.logexchanges("New idea is too long: " + ideaToTake);
+                return;
             }
 
             idea.takeNewIdea(ideaToTake);

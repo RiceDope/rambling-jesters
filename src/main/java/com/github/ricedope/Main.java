@@ -48,16 +48,16 @@ public class Main {
             System.out.println(titleMessage + "\n" + choiceMessage);
             System.out.println(">>>");
             String choice = scanner.nextLine().toUpperCase();
+            scanner = null;
 
             switch(choice) {
                 case "1":
-                    System.out.println("Please select the path to the XML file when the dialogue pops up. (SPACE)");
-                    scanner.nextLine();
-                    scanner = null;
+                    System.out.println("A selection window should show. If not visible please alt + tab to find it");
                     JFileChooser chooser = new JFileChooser();
                     int result = chooser.showOpenDialog(null);
                     if (result == JFileChooser.APPROVE_OPTION) {
                         filepath = chooser.getSelectedFile().getAbsolutePath();
+                        Logger.clearConsole();
                         Logger.logprogress("Using XML file: " + filepath);
                         runMainProgram(filepath);
                     } else {
@@ -69,11 +69,13 @@ public class Main {
                 case "2":
                     Logger.logprogress("Using default XML file.");
                     filepath = "src/main/resources/default.xml";
+                    Logger.clearConsole();
                     runMainProgram(filepath);
                     break;
                 case "3":
                     Logger.logprogress("Creating new XML file...");
                     filepath ="";
+                    Logger.clearConsole();
                     createNewXMLFile();
                     break;
                 case "4":
@@ -101,6 +103,8 @@ public class Main {
 
     public static void createNewXMLFile() {
 
+        String chosenText="Chosen values will be shown as you go:";
+
         Logger.clearConsole();
         System.out.println("Welcome to the XML file creation tool!");
         System.out.println("We will create a new XML file step by step then allow you to add it to the program.");
@@ -108,40 +112,48 @@ public class Main {
         System.out.println("https://github.com/RiceDope/rambling-jesters");
         Element root = new Element("runner");
         root.addNamespaceDeclaration("xsi", "http://www.w3.org/2001/XMLSchema-instance");
+        
 
         // Select the seedtext file
         System.out.println("Please select the path to the seedtext file (This is recommended to be a .txt from the gutenberg project)");
+        System.out.println("Remove anything you would not like to be used as seedtext from this file beforehand");
         System.out.println("A selection window should show. If not visible please alt + tab to find it");
         JFileChooser chooser = new JFileChooser();
         String seedtextpath;
         int result = chooser.showOpenDialog(null);
         if (result == JFileChooser.APPROVE_OPTION) {
             seedtextpath = chooser.getSelectedFile().getAbsolutePath();
+            chosenText += "\nSeed text file:" + seedtextpath;
             Element seedtext = new Element("seedtext");
             seedtext.appendChild(seedtextpath);
             root.appendChild(seedtext);
-            Logger.logprogress("Seed text selected: " + seedtextpath);
         } else {
             Logger.logerror("No file selected. Exiting program");
             System.exit(0);
         }
 
+        Logger.clearConsole();
+        System.out.println(ANSI.GREEN_BACKGROUND + chosenText + ANSI.RESET + "\n");
+
         // Select the jesernames file
-        System.out.println("Please select the path to the jesternames file (This is recommended to be a .csv file with all names on one line)");
+        System.out.println("Please select the path to the jesternames file (This must to be a .csv file with all names on one line)");
         System.out.println("A selection window should show. If not visible please alt + tab to find it");
         chooser = new JFileChooser();
         String jesternamespath;
         result = chooser.showOpenDialog(null);
         if (result == JFileChooser.APPROVE_OPTION) {
             jesternamespath = chooser.getSelectedFile().getAbsolutePath();
+            chosenText += "\nJester names file:" + jesternamespath;
             Element jesternames = new Element("jesternames");
             jesternames.appendChild(jesternamespath);
             root.appendChild(jesternames);
-            Logger.logprogress("Jester names selected: " + jesternamespath);
         } else {
             Logger.logerror("No file selected. Exiting program");
             System.exit(0);
         }
+
+        Logger.clearConsole();
+        System.out.println(ANSI.GREEN_BACKGROUND + chosenText + ANSI.RESET + "\n");
 
         // Type a prompt for the LLM model to use:
         Scanner scanner = new Scanner(System.in);
@@ -150,13 +162,16 @@ public class Main {
         String llmprompt = scanner.nextLine();
         if (llmprompt.equals("<default>")) {
             llmprompt = "Please review the following text and return only the corrected version within quotation marks. Do not change the order of any non-duplicated phrases. Remove all duplicated phrases. Correct grammar and punctuation as needed to ensure the sentence flows naturally. Add connector words (e.g., and, but, then) only where necessary for fluidity. Do not include any explanation or extra output—only the revised text in quotation marks.";
-            Logger.logprogress("LLM prompt selected: " + llmprompt);
         } else {
             Logger.logprogress("LLM prompt selected: " + llmprompt);
         }
+        chosenText += "\nLLM prompt:" + llmprompt;
         Element llmpromptElement = new Element("llmprompt");
         llmpromptElement.appendChild(llmprompt);
         root.appendChild(llmpromptElement);
+        
+        Logger.clearConsole();
+        System.out.println(ANSI.GREEN_BACKGROUND + chosenText + ANSI.RESET + "\n");
 
         // Select the LLM timeout
         System.out.println("Please type the timeout for the LLM model to use. For slower machines this should be higher 600 secs");
@@ -164,44 +179,69 @@ public class Main {
         String llmtimeoutString = scanner.nextLine();
         Element llmtimeoutElement = new Element("llmtimeout");
         llmtimeoutElement.appendChild(llmtimeoutString);
+        chosenText += "\nLLM timeout:" + llmtimeoutString;
         root.appendChild(llmtimeoutElement);
-        Logger.logprogress("LLM timeout selected: " + llmtimeoutString);
+
+        Logger.clearConsole();
+        System.out.println(ANSI.GREEN_BACKGROUND + chosenText + ANSI.RESET + "\n");
 
         // Select the number of Jesters to create
-        System.out.println("Please type the number of Jesters to create. This should be less than the number of possible Jesters.");
-        System.out.println("This is the number of Jesters that will be created and used in the program.");
+        System.out.println("Please type the number of Jesters to create. This should be less than the number of possible Jesters. (Unique names) or (unique seedtext) whichever is smaller");
         String jestersString = scanner.nextLine();
+        chosenText += "\nNumber of Jesters:" + jestersString;
         Element jestersElement = new Element("jesters");
         jestersElement.appendChild(jestersString);
         root.appendChild(jestersElement);
-        Logger.logprogress("Number of Jesters selected: " + jestersString);
+
+        Logger.clearConsole();
+        System.out.println(ANSI.GREEN_BACKGROUND + chosenText + ANSI.RESET + "\n");
 
         // Select the gridsize
-        System.out.println("Please type the size of the grid to use. This is the size of the grid that the Jesters will interact on.");
-        System.out.println("The grid will be nxn in size. On each interaction the Base Jester will look in a gridsize/3 radius around them.");
+        System.out.println("Please type the size of the grid to use. The grid will be nxn in size. On each interaction the Base Jester will look in a gridsize/3 radius around them.");
         String gridsizeString = scanner.nextLine();
+        chosenText += "\nGrid size:" + gridsizeString;
         Element gridsizeElement = new Element("gridsize");
         gridsizeElement.appendChild(gridsizeString);
         root.appendChild(gridsizeElement);
-        Logger.logprogress("Grid size selected: " + gridsizeString);
+
+        Logger.clearConsole();
+        System.out.println(ANSI.GREEN_BACKGROUND + chosenText + ANSI.RESET + "\n");
 
         // Minimum passage length
         System.out.println("Please type the minimum passage length to use. This is the minimum length of the passage each Jester starts with.");
         System.out.println("This is recommended to be 250 characters for reasonable results.");
         String minimumpassagelengthString = scanner.nextLine();
+        chosenText += "\nMinimum passage length:" + minimumpassagelengthString;
         Element minimumpassagelengthElement = new Element("minimumpassagelength");
         minimumpassagelengthElement.appendChild(minimumpassagelengthString);
         root.appendChild(minimumpassagelengthElement);
-        Logger.logprogress("Minimum passage length selected: " + minimumpassagelengthString);
+
+        Logger.clearConsole();
+        System.out.println(ANSI.GREEN_BACKGROUND + chosenText + ANSI.RESET + "\n");
+
+        // Maximum passage length
+        System.out.println("Please type the maximum passage length to use. This is the largest a piece of text can become. (For worse machines use smaller values)");
+        System.out.println("This is recommended to be 1500 characters for reasonable results.");
+        String maximumpassagelength = scanner.nextLine();
+        chosenText += "\nMaximum passage length:" + maximumpassagelength;
+        Element maximumpassagelengthElement = new Element("maximumpassagelength");
+        maximumpassagelengthElement.appendChild(maximumpassagelength);
+        root.appendChild(maximumpassagelengthElement);
+
+        Logger.clearConsole();
+        System.out.println(ANSI.GREEN_BACKGROUND + chosenText + ANSI.RESET + "\n");
 
         // Select the number of interactions
         System.out.println("Please type the number of interactions to use. This is the number of interactions the Jester will have with other Jesters.");
-        System.out.println("100 generates reasonable results, however if your PC is slower then this may crash or take upwards of 15 minutes.");
+        System.out.println("100 generates reasonable results, however if your PC is slower then this may crash or take upwards of 15 minutes. 10 is easy to run and quick.");
         String interactionsString = scanner.nextLine();
+        chosenText += "\nNumber of interactions:" + interactionsString;
         Element interactionsElement = new Element("interactions");
         interactionsElement.appendChild(interactionsString);
         root.appendChild(interactionsElement);
-        Logger.logprogress("Number of interactions selected: " + interactionsString);
+
+        Logger.clearConsole();
+        System.out.println(ANSI.GREEN_BACKGROUND + chosenText + ANSI.RESET + "\n");
 
         System.out.println("Now please select a directory to save the XML file to.");
         System.out.println("A selection window should show. If not visible please alt + tab to find it");
@@ -215,7 +255,11 @@ public class Main {
         File selectedDirectory;
         if (result == JFileChooser.APPROVE_OPTION) {
             selectedDirectory = chooser.getSelectedFile();
-            System.out.println("Selected path: " + selectedDirectory.getAbsolutePath());
+
+            chosenText += "\nSelected path:" + selectedDirectory.getAbsolutePath();
+
+            Logger.clearConsole();
+            System.out.println(ANSI.GREEN_BACKGROUND + chosenText + ANSI.RESET + "\n");
 
             System.out.println("Now please name your running file. (No spaces or special characters)");
             String filename = scanner.nextLine();
@@ -237,7 +281,6 @@ public class Main {
             System.exit(0);
         }
         
-        Logger.logprogress("XML file created successfully");
         scanner = null;
 
     }
@@ -288,6 +331,7 @@ public class Main {
         int jesters;
         int gridsize;
         int minimumpassagelength;
+        int maximumpassagelength;
         int interactions;
 
         try {
@@ -305,10 +349,12 @@ public class Main {
             Logger.logprogress("Grid size: " + gridsize);
             minimumpassagelength = Integer.parseInt(root.getFirstChildElement("minimumpassagelength").getValue());
             Logger.logprogress("Minimum passage length: " + minimumpassagelength);
+            maximumpassagelength = Integer.parseInt(root.getFirstChildElement("maximumpassagelength").getValue());
+            Logger.logprogress("Maximum passage length: " + maximumpassagelength);
             interactions = Integer.parseInt(root.getFirstChildElement("interactions").getValue());
             Logger.logprogress("Number of interactions: " + interactions);
         } catch (Exception e) {
-            Logger.logprogress("Error loading components from XML file: " + e.getMessage());
+            Logger.logerror("Error loading components from XML file: " + e.getMessage());
             System.exit(0);
             return;
         }
@@ -316,7 +362,7 @@ public class Main {
 
         // Create JesterFactory and Plane Objects
         Logger.logprogress("Creating Jester factory...");
-        JesterFactory jf = new JesterFactory(seedtext, minimumpassagelength, jesternames);
+        JesterFactory jf = new JesterFactory(seedtext, minimumpassagelength, jesternames, maximumpassagelength);
         Logger.logprogress("Created Jester factory");
         Logger.logprogress("Creating plane (Can take some time) ...");
         Plane plane = new Plane(gridsize, jesters, jf);
@@ -372,14 +418,15 @@ public class Main {
                 try {
                     File outputFile = new File(selectedDirectory.getAbsolutePath() + "\\output.txt");
                     FileOutputStream fos = new FileOutputStream(outputFile);
-                    fos.write(("Original Idea:\n" + seed + "\n\n").getBytes());
                     fos.write(("Iterations: "+ interactions + "\n").getBytes());
                     fos.write(("Grid Size: "+ gridsize + "\n").getBytes());
                     fos.write(("Minimum Passage Length: "+ minimumpassagelength + "\n").getBytes());
+                    fos.write(("Maximum Passage Length: "+ maximumpassagelength + "\n").getBytes());
                     fos.write(("Jester Names: "+ jesternames + "\n").getBytes());
                     fos.write(("LLM Prompt: "+ llmprompt + "\n").getBytes());
                     fos.write(("LLM Timeout: "+ llmtimeout + "\n").getBytes());
                     fos.write(("Seed Text: "+ seedtext + "\n").getBytes());
+                    fos.write(("Original Idea:\n" + seed + "\n\n").getBytes());
                     fos.write(("Jester-"+name+":\n" + response).getBytes());
                     fos.close();
                     System.out.println("Output saved to: " + outputFile.getAbsolutePath());

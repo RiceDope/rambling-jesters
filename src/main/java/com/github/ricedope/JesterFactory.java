@@ -19,12 +19,11 @@ import java.util.Arrays;
 
 public class JesterFactory {
     
-    // Most recently assigned ID #
-    private int currentId = 0;
     private String textCorpus;
     private ArrayList<String> passages;
     private ArrayList<String> names;
     private int minimumPassageLength;
+    private int maximumpassagelength = 0; // Maximum length of the passage to be used
 
     /**
      * Constructor for the JesterFactory class
@@ -32,7 +31,7 @@ public class JesterFactory {
      * @param minimumPassageLength Minimum length of the passage to be used
      * @param jesterNames Path to the .csv file containing the names of the Jesters
      */
-    public JesterFactory(String path, int minimumPassageLength, String jesterNames) {
+    public JesterFactory(String path, int minimumPassageLength, String jesterNames, int maxpassagelength) {
         // Prepare the text for assignment
         textCorpus = TextPreProcessor.finalCleanupForNLP(TextPreProcessor.removeChapterNamesAndLeadingContents(TextPreProcessor.snipGutenbergStartAndEnd(TextPreProcessor.readFile(path))));
         // Split the text into passages
@@ -43,6 +42,7 @@ public class JesterFactory {
         names = new ArrayList<>(Arrays.asList(rawNames));
         // Set minimum passage length and cleanse the text available
         this.minimumPassageLength = minimumPassageLength;
+        this.maximumpassagelength = maxpassagelength;
         cleansePassages();
     }
 
@@ -52,14 +52,13 @@ public class JesterFactory {
      */
     public Jester newJester() {
         // Create a new Jester with a unique ID, name and passage of text
-        int id = getNewId();
         String name = getNewName();
         String seed = getNewPassage();
         if (seed.length() < minimumPassageLength) {
             // If the passage is too short, get a new one
             seed = getNewPassage();
         }
-        return new Jester(id, name, seed);
+        return new Jester(name, seed, maximumpassagelength);
     }
 
     /**
@@ -81,15 +80,6 @@ public class JesterFactory {
     private void cleansePassages() {
         // Remove passages that are too short
         passages.removeIf(passage -> passage.length() < minimumPassageLength);
-    }
-
-    /**
-     * Create a new ID with no way of reassigning it
-     * @return Integer ID
-     */
-    private int getNewId() {
-        currentId++;
-        return currentId;
     }
 
     /**
