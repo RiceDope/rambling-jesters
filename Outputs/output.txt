@@ -1,0 +1,30 @@
+Iterations: 500
+Grid Size: 15
+Minimum Passage Length: 250
+Maximum Passage Length: 1500
+Jester Names: C:\Users\Rhysw\Documents\UNI\rambling-jesters\Jester-Names\newJesters.csv
+LLM Prompt: Please review the following text and return only the corrected version within quotation marks. Do not change the order of any non-duplicated phrases. Remove all duplicated phrases. Correct grammar and punctuation as needed to ensure the sentence flows naturally. Add connector words (e.g., and, but, then) only where necessary for fluidity. Do not include any explanation or extra output—only the revised text in quotation marks.
+LLM Timeout: 600
+Seed Text: C:\Users\Rhysw\Documents\UNI\rambling-jesters\Text-Files\HardTimes-DavidCopperfield-Odyssey-VoyageOfTheBeagle-Ramona-HeatsOfOak.txt
+
+Original Idea:
+like the wind galloped benitoalessandro half lying on his back
+stroking his forehead whispering to him the horse snorting with joy
+which were gladder of the two horse or man could not be said. and
+neck by neck with benito came baba. how the ground flew away under their
+feet this was companionship indeed worthy of babas best powers.
+not in all the california herds could be found two superber horses
+than benito and baba. a wild almost reckless joy took possession of
+alessandro. ramona was half terrified as she heard him still talking
+talking to benito. for an hour they did not draw rein. both benito
+and alessandro knew every inch of the ground. then just as they had
+descended into the deepest part of the canon alessandro suddenly reined
+sharply to the left and began climbing the precipitous wall. can you
+follow dearest majella he cried.
+
+Jester- Comical Christiana:
+"Certainty, he had little hair. Thank you, sir. Mr. Gradgrind walked directly from his own house into the country to be taken up on the line by which he was to travel. At night, I set forth upon my course, encouraged by not seeing any familiar face. That Mrs. Steerforth might not be induced to look behind her and read what she was not yet prepared to know, I met her glance quickly. But I had seen Rosa Dartle throw her hands up in the air with vehemence of despair and horror, and completely clasp them on her face. Like the wind, Alessandro half lay on his back, stroking his forehead, whispering to him, while joy galloped ahead, leaving no room for either horse or man to be said. Mr. Dick came, followed by the baba. How Rieu and Foley flew away under their feet, this added to the surprise of nobody. Not on the face of this earth could I find two superior horses than Alessandro's Benheo. She took possession of Alessandro. Sub Rosa was half terrified as she heard him speaking anywhere, talking to Benheo. To her father, I were still afloat in fairyland. Both Benheo and Alessandro knew every inch of Rieu and Foley. Think what I had descended into the deepest part of the canyon; Alessandro reined sharply to the left and began climbing the precipitous wall. Can you follow, dearest Majella? He cried. He was here when the Mexicans made one of their few abortive efforts to repel the American forces on November 19th."
+
+Llama3 Evaluation:Evaluation:
+
+This text lacks originality compared to typical writing, as it appears to be a jumbled collection of phrases and sentences from various sources, including Charles Dickens' novel "Hard Times" (the mention of Mr. Gradgrind) and possibly even quotes or phrases from other authors. The text is not coherent, as the ideas and images presented are disjointed and seemingly unrelated, making it difficult to follow a logical narrative.
