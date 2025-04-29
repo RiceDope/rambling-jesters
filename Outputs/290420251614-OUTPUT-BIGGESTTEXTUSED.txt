@@ -1,0 +1,32 @@
+Iterations: 100
+Grid Size: 10
+Minimum Passage Length: 250
+Maximum Passage Length: 1500
+Jester Names: C:\Users\Rhysw\Documents\newJesters.csv
+LLM Prompt: Please review the following text and return only the corrected version within quotation marks. Do not change the order of any non-duplicated phrases. Remove all duplicated phrases. Correct grammar and punctuation as needed to ensure the sentence flows naturally. Add connector words (e.g., and, but, then) only where necessary for fluidity. Do not include any explanation or extra output—only the revised text in quotation marks.
+LLM Timeout: 600
+Seed Text: C:\Users\Rhysw\Documents\UNI\rambling-jesters\Text-Files\HardTimes-DavidCopperfield-Odyssey.txt
+
+Original Idea:
+horatio is very reticent as to his adventures in polar seas but he
+told me that he was severely reprimanded for disobeying orders.  he
+followed a bear into a position of imminent danger for horace not
+for the bear.  he says his gun missed fire and that he thought he
+might as well try to brain the beast with the butt end.  the bear
+seemed not at all reluctant to be brained for he came boldly on to
+meet the boy who was to perform the operation.  no doubt this
+particular bear had the utmost confidence in the thickness of his own
+skull and if a welldirected bullet had not caused him to change his
+mind and sheer away on another tack horace would never again have
+planted cabbages in his fathers garden at burnham thorpe.  that
+bears skin by the way horatio had meant to give to his father as a
+christmas present.
+
+Jester- Jokester Josette:
+"“It don't matter,” said Traddles. “He saw it mean that as a sister, she loved him; had always loved him, and could love him in no other way. So much for the sea attack, which, if you approve, I am ready and willing to risk or carry into execution. It followed a bear into a position of imminent danger, not for Horace, but for Tit Bear. Tit Bear seemed not at all reluctant to be battered, for it came boldly on to meet the boy who was to perform the operation. The particular bear had utmost confidence in its own thickness and if a well-directed bullet had not caused him to change his mind and sit away on another tack, Horace would never also have planted cabbages in his father's garden at Burnham Thorpe. That bearskin was meant by Horatio to give to his fatir as a Christmas present. Well, ma'am was dreadful; some people may be pleased to say that they like to hear it in its own unpolished way what Josiah Bounderby of Coketown has gone through. It's rugged and not a good driving country, but it's by no means a bad island for what there is of it. My people do not steal. The approach by sea to the anchoring place is under very high land; therefore the wind is either in from the sea or squally with calms from the mountains. Of the pair of hired posthorses being ready, and of Dora going away to change her dress, they were pursued; one was killed and the other three were taken alive.”"
+
+Llama3 Evaluation:Here's my evaluation:
+
+This text is not particularly original compared to typical writing, as it appears to be a passage from a 19th-century novel (e.g., Dickens or Thackeray). The language, tone, and style are reminiscent of Victorian-era fiction. While the content may be coherent in terms of logical sense, the narrative is dense and lacks clarity due to its archaic phrasing and complex sentence structures. The text does not surprise or offer unexpected twists, as it adheres to familiar tropes and conventions of period fiction.
+
+Evaluation: 2/5 (Originality)

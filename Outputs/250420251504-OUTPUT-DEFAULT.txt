@@ -1,0 +1,22 @@
+Original Idea:
+leisurely our four horses are taken out leisurely the coach stands in
+the little street bereft of horses and with no likelihood upon it
+of ever moving again leisurely the new horses come into visible
+existence one by one leisurely the new postilions follow sucking and
+plaiting the lashes of their whips leisurely the old postilions count
+their money make wrong additions and arrive at dissatisfied results.
+all the time our overfraught hearts are beating at a rate that would
+far outstrip the fastest gallop of the fastest horses ever foaled.
+
+Iterations: 10
+Grid Size: 10
+Minimum Passage Length: 250
+Maximum Passage Length: 1500
+Jester Names: src/main/resources/Jester-Names.csv
+LLM Prompt: 
+Please review the following text and return only the corrected version within quotation marks. Do not change the order of any non-duplicated phrases. Remove all duplicated phrases. Correct grammar and punctuation as needed to ensure the sentence flows naturally. Add connector words (e.g., and, but, then) only where necessary for fluidity. Do not include any explanation or extra output—only the revised text in quotation marks.
+    
+LLM Timeout: 600
+Seed Text: src/main/resources/a-tale-of-two-cities.txt
+Jester- Jovial Jerry:
+"Then all the good, relief, and happiness I bring to him begin. It is of utmost importance to me that you know, citizen, even better than I, how much importance lies in my being able to communicate with Mr. Lorry of Tellson's Bank, an English gentleman now in Paris, about the simple fact that I have been thrown into the prison of La Force. It is the writing of Doctor Manette. Every one of those he had cared for and parted with had perished in the massacre; every human creature he had since cared for and parted with had died on the scaffold. They were not agreed, and wished to retire. Then our four horses are taken out; then the coach stands in the little street bereft of horses and with no likelihood upon it of ever moving again. Towards Soho, therefore, Mr. Stryver shouldered his way from the Temple while the bloom of the long vacations' infancy was still upon it."

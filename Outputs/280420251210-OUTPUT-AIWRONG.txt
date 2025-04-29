@@ -1,0 +1,31 @@
+Iterations: 50
+Grid Size: 10
+Minimum Passage Length: 250
+Maximum Passage Length: 1500
+Jester Names: C:\Users\Rhysw\Documents\newJesters.csv
+LLM Prompt: Please review the following text and return only the corrected version within quotation marks. Do not change the order of any non-duplicated phrases. Remove all duplicated phrases. Correct grammar and punctuation as needed to ensure the sentence flows naturally. Add connector words (e.g., and, but, then) only where necessary for fluidity. Do not include any explanation or extra output—only the revised text in quotation marks.
+LLM Timeout: 600
+Seed Text: C:\Users\Rhysw\Documents\HardTimes-DavidCopperfield-Odyssey.txt
+
+Original Idea:
+i gave miss mowcher my hand with a very different opinion of her from
+that which i had hitherto entertained and opened the door to let her
+out. it was not a trifling business to get the great umbrella up and
+properly balanced in her grasp but at last i successfully accomplished
+this and saw it go bobbing down the street through the rain without
+the least appearance of having anybody underneath it except when a
+heavier fall than usual from some overcharged waterspout sent it
+toppling over on one side and discovered miss mowcher struggling
+violently to get it right. after making one or two sallies to her
+relief which were rendered futile by the umbrellas hopping on again
+like an immense bird before i could reach it i came in went to bed
+and slept till morning.
+
+Jester- Wise Winston Jr.:
+"Your mistake in life is that you do not look forward far enough. I found, in the course of the day, that this was the case. Miss Mills having been unhappy in a misplaced affection and being understood to have retired from the world on her awful stock of experience, but still to take a calm interest in the unblighted hopes and loves of youth, then why doesn't she get what I want out of him for my sake? She is not obliged to say what she is going to do with it; she is sharp enough – she could manage to coax it out of him if she chose. My dear child, answered Euryclea, 'I am not mocking you.' I gave Miss Mowcher my hand with a very different opinion of her from that which I had hitherto entertained and opened the door to let her out. It was not a trifling business to get the great umbrella up and properly balanced in her grasp, but at last, as for my ship, I accomplished this and saw it go bobbing down the street through the rain without the least appearance of having anybody underneath it, except when a heavier fall than usual from some overcharged waterspout sent it toppling over on one side and discovered Miss Mowcher struggling violently to get it right. After making one or two sallies to her relief, which were rendered futile by the umbrella's hopping on again like an immense bird before I could reach it, I came in, went to bed, and slept till morning."
+
+Llama3 Evaluation:Here is my evaluation:
+
+This text is not particularly original compared to typical writing, as it appears to be a passage from a novel (likely Charles Dickens' "Great Expectations") and contains distinctive character names, plot elements, and literary styles that are characteristic of 19th-century literature. However, the text does demonstrate some coherence, as it follows a clear narrative thread despite containing internal monologues, digressions, and non-sequiturs.
+
+As for surprise or unexpectedness, the text is not particularly surprising, given its roots in Victorian-era literary tradition. However, the passage's attention to minute details (e.g., the struggle to manage the umbrella) does create a sense of vividness and immediacy that might be considered unexpected or unusual in more modern writing styles.
