@@ -120,7 +120,8 @@ public class Jester {
 
                 // Check if we violate maximum passage length
                 if (newIdea.length() >= maximumpassagelength) {
-                    Logger.logexchanges("New idea is too long: " + newIdea);
+                    Logger.logexchanges("New idea is too long (Removing least fav): " + newIdea);
+                    removeLeastFavText();
                     return;
                 }
                 idea.takeNewIdea(newIdea);
@@ -160,7 +161,8 @@ public class Jester {
 
             // Check if we violate maximum passage length
             if (ideaToTake.length() >= maximumpassagelength) {
-                Logger.logexchanges("New idea is too long: " + ideaToTake);
+                Logger.logexchanges("New idea is too long (Removing least fav): " + ideaToTake);
+                removeLeastFavText();
                 return;
             }
             idea.takeNewIdea(ideaToTake);
@@ -198,7 +200,8 @@ public class Jester {
 
             // Check if we violate maximum passage length
             if (ideaToTake.length() >= maximumpassagelength) {
-                Logger.logexchanges("New idea is too long: " + ideaToTake);
+                Logger.logexchanges("New idea is too long (Removing lest fav): " + ideaToTake);
+                removeLeastFavText();
                 return;
             }
 
@@ -235,11 +238,33 @@ public class Jester {
 
             // Check if we violate maximum passage length
             if (ideaToTake.length() >= maximumpassagelength) {
-                Logger.logexchanges("New idea is too long: " + ideaToTake);
+                Logger.logexchanges("New idea is too long (Removing least fav): " + ideaToTake);
+                removeLeastFavText();
                 return;
             }
 
             idea.takeNewIdea(ideaToTake);
         }
+    }
+
+    /**
+     * This occurs when we reach the maximum passage length and causes the Jesters least favourite text to be removed
+     */
+    private void removeLeastFavText() {
+
+        CoreSentence leastFav = NLP.findFurthestFrom(sentiment, idea.getSentences());
+        if (leastFav == null) {
+            Logger.logprogress("No sentences found with the same sentiment as " + sentiment);
+            return;
+        } else {
+            Logger.logprogress("Removing least favourite text: " + leastFav.text());
+
+            // Remove the sentence from the idea
+            String curId = idea.currentIdea;
+            curId = curId.replace(leastFav.text(), "");
+
+            idea.takeNewIdea(curId);
+        }
+
     }
 }

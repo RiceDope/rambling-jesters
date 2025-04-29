@@ -256,6 +256,56 @@ public class NLP {
 
     }
 
+    public static CoreSentence findFurthestFrom(int sentiment, List<CoreSentence> otherDoc) {
+        // Tally up the sentiment scores as a number in an ArrayList
+        // Look for a sentence that is either the same sentiment or close
+        // To do this find the number that is 1 either side of the sentiment score
+        // If not close then ignore and return null
+        // Will prefer a sentiment score that is more like their personality
+        // neutral (Either side)
+        // Negative: Will prefer Very Negative or Negative scores
+        // Positive: Will do the same as above
+        ArrayList<Integer> sentimentScores = new ArrayList<>();
+        for (CoreSentence sentence : otherDoc){
+
+            sentimentScores.add(sentimentScoreNumbers(sentence.sentiment()));
+
+        }
+
+        // Where is our current sentiment score
+        switch(sentiment) {
+            case 1:
+            case 2:
+                // Look for a Negative sentiment score
+                for (Integer score : sentimentScores) {
+                    if (score == 4 || score == 5) {
+                        return otherDoc.get(sentimentScores.indexOf(score));
+                    }
+                }
+                break;
+            case 4:
+            case 5:
+                // Look for a Positive sentiment score
+                for (Integer score : sentimentScores) {
+                    if (score == 1 || score == 2) {
+                        return otherDoc.get(sentimentScores.indexOf(score));
+                    }
+                }
+                break;
+            default:
+                // Look for a Neutral, Positive or Negative sentiment score
+                for (Integer score : sentimentScores) {
+                    if (score == 1 || score == 5) {
+                        return otherDoc.get(sentimentScores.indexOf(score));
+                    }
+                }
+                break;
+        }
+
+        // If we have not found a sentence that is close to the sentiment score then return null
+        return null;
+    }
+
     /**
      * Convert the sentiment score of CoreNLP sentiment to a number 1-5
      * 1 = Very Negative

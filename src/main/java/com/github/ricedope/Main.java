@@ -374,9 +374,9 @@ public class Main {
         // Begin the interaction loop
         Logger.logprogress("Initiating interactions (Can take some time) ...");
         for (int i = 0; i < interactions; i++) {
-            Logger.logprogress("Interaction" + (i+1) + "/" + interactions);
+            Logger.logprogress("Interaction: " + (i+1) + "/" + interactions);
             plane.interactionLoop();
-            Logger.logprogress("Current Text: \n" + plane.getCurrentIdea());
+            Logger.logprogress("Current Text Size: " + plane.getCurrentIdea().length() + "/" + maximumpassagelength);
             plane.regenerateGrid();
         }
         Logger.logprogress("Finished interactions");
@@ -394,10 +394,26 @@ public class Main {
         Llama3Client.wait(5);
         String response = Llama3Client.requester(llmprompt + "[" +finalIdea + "]", llmtimeout);
 
+        Logger.logprogress("LLM response received. Sending to LLM for evaluation...");
+
+        String evaluation = Llama3Client.requester("Please judge the creativity of the following text:\n" + //
+                        "\n" + //
+                        "Is it original compared to typical writing?\n" + //
+                        "\n" + //
+                        "Is it coherent (makes some logical sense)?\n" + //
+                        "\n" + //
+                        "Is it surprising or unexpected?\n" + //
+                        "\n" + //
+                        "Write a brief evaluation (2 sentences maximum).**\n" + //
+                        "\n" + //
+                        "Do not include any text other than that of your answer" + //
+                        "Text:" + response, llmtimeout);
+
         Logger.clearConsole();
 
         Logger.logprogress("Original Idea:\n" + seed + "\n\n");
         Logger.logprogress("Jester-"+name+":\n" + response);
+        Logger.logprogress("Evaluation:\n" + evaluation);
 
         p.destroy(); // Destroy the process to free up memory
 
@@ -426,8 +442,9 @@ public class Main {
                     fos.write(("LLM Prompt: "+ llmprompt + "\n").getBytes());
                     fos.write(("LLM Timeout: "+ llmtimeout + "\n").getBytes());
                     fos.write(("Seed Text: "+ seedtext + "\n").getBytes());
-                    fos.write(("Original Idea:\n" + seed + "\n\n").getBytes());
-                    fos.write(("Jester-"+name+":\n" + response).getBytes());
+                    fos.write(("\nOriginal Idea:\n" + seed + "\n\n").getBytes());
+                    fos.write(("Jester-"+name+":\n" + response + "\n\n").getBytes());
+                    fos.write(("Llama3 Evaluation:" + evaluation).getBytes());
                     fos.close();
                     System.out.println("Output saved to: " + outputFile.getAbsolutePath());
                 } catch (Exception e) {
