@@ -430,7 +430,7 @@ public class Main {
             File selectedDirectory;
             if (result == JFileChooser.APPROVE_OPTION) {
                 selectedDirectory = chooser.getSelectedFile();
-                System.out.println("Selected path: " + selectedDirectory.getAbsolutePath());
+                Logger.logprogress("Selected path: " + selectedDirectory.getAbsolutePath());
                 try {
                     File outputFile = new File(selectedDirectory.getAbsolutePath() + "\\output.txt");
                     FileOutputStream fos = new FileOutputStream(outputFile);
@@ -446,7 +446,7 @@ public class Main {
                     fos.write(("Jester-"+name+":\n" + response + "\n\n").getBytes());
                     fos.write(("Llama3 Evaluation:" + evaluation).getBytes());
                     fos.close();
-                    System.out.println("Output saved to: " + outputFile.getAbsolutePath());
+                    Logger.logprogress("Output saved to: " + outputFile.getAbsolutePath());
                 } catch (Exception e) {
                     Logger.logerror("Error saving output: " + e.getMessage());
                 }

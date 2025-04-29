@@ -120,7 +120,7 @@ public class Jester {
 
                 // Check if we violate maximum passage length
                 if (newIdea.length() >= maximumpassagelength) {
-                    Logger.logexchanges("New idea is too long (Removing least fav): " + newIdea);
+                    Logger.logexchanges("New idea is too long (Removing least fav)");
                     removeLeastFavText();
                     return;
                 }
@@ -161,7 +161,7 @@ public class Jester {
 
             // Check if we violate maximum passage length
             if (ideaToTake.length() >= maximumpassagelength) {
-                Logger.logexchanges("New idea is too long (Removing least fav): " + ideaToTake);
+                Logger.logexchanges("New idea is too long (Removing least fav)");
                 removeLeastFavText();
                 return;
             }
@@ -200,7 +200,7 @@ public class Jester {
 
             // Check if we violate maximum passage length
             if (ideaToTake.length() >= maximumpassagelength) {
-                Logger.logexchanges("New idea is too long (Removing lest fav): " + ideaToTake);
+                Logger.logexchanges("New idea is too long (Removing lest fav)");
                 removeLeastFavText();
                 return;
             }
@@ -238,7 +238,7 @@ public class Jester {
 
             // Check if we violate maximum passage length
             if (ideaToTake.length() >= maximumpassagelength) {
-                Logger.logexchanges("New idea is too long (Removing least fav): " + ideaToTake);
+                Logger.logexchanges("New idea is too long (Removing least fav)");
                 removeLeastFavText();
                 return;
             }
@@ -254,10 +254,10 @@ public class Jester {
 
         CoreSentence leastFav = NLP.findFurthestFrom(sentiment, idea.getSentences());
         if (leastFav == null) {
-            Logger.logprogress("No sentences found with the same sentiment as " + sentiment);
+            Logger.logprogress("No least favourite text found");
             return;
         } else {
-            Logger.logprogress("Removing least favourite text: " + leastFav.text());
+            Logger.logprogress("Removing least favourite text");
 
             // Remove the sentence from the idea
             String curId = idea.currentIdea;
