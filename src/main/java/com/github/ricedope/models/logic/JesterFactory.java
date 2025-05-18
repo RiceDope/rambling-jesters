@@ -1,4 +1,4 @@
-package com.github.ricedope;
+package com.github.ricedope.models.logic;
 
 /**
  * Class that manages the creation of individual Jesters

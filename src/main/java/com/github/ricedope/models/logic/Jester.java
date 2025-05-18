@@ -1,7 +1,9 @@
-package com.github.ricedope;
+package com.github.ricedope.models.logic;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import com.github.ricedope.Logger;
 
 import edu.stanford.nlp.pipeline.CoreSentence;
 import edu.stanford.nlp.trees.Tree;

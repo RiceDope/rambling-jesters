@@ -1,4 +1,4 @@
-package com.github.ricedope;
+package com.github.ricedope.models.logic;
 
 /**
  * LLama3Client.java
@@ -11,6 +11,7 @@ package com.github.ricedope;
 
 import okhttp3.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.ricedope.Logger;
 
 import java.io.IOException;
 import java.time.Duration;

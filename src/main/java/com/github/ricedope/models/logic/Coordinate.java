@@ -1,4 +1,4 @@
-package com.github.ricedope;
+package com.github.ricedope.models.logic;
 
 /**
  * Class that handles the coordinates of the a Jester on a plane 
@@ -37,22 +37,6 @@ public class Coordinate {
 
     public int getY() {
         return y;
-    }
-
-    /**
-     * Given a new coordinate, choose a point that is on the line between the two points
-     * The point should be moveSize away from the current point and in the direction of the new point
-     * @param newCoord the new coordinate
-     * @return the new coordinate that is moveSize on the current path
-     */
-    public Coordinate moveTowards(Coordinate newCoord, int moveSize) {
-        // Get the distance between the two points
-        double distance = Math.sqrt(Math.pow(newCoord.getX() - x, 2) + Math.pow(newCoord.getY() - y, 2));
-        // Get the direction of the new point
-        double directionX = (newCoord.getX() - x) / distance;
-        double directionY = (newCoord.getY() - y) / distance;
-        // Move the current point in the direction of the new point
-        return new Coordinate((int) (x + directionX * moveSize), (int) (y + directionY * moveSize));
     }
 
     public boolean withinGrid(int gridSize) {

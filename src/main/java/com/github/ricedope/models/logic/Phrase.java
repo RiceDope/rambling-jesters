@@ -1,4 +1,4 @@
-package com.github.ricedope;
+package com.github.ricedope.models.logic;
 
 public enum Phrase {
     NP("NP"), // Noun Phrase

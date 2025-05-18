@@ -1,6 +1,8 @@
-package com.github.ricedope;
+package com.github.ricedope.models.logic;
 
 import java.util.ArrayList;
+
+import com.github.ricedope.Logger;
 
 /**
  * A representation of a 2D plane that the Jesters can "wander" around and interect with each other

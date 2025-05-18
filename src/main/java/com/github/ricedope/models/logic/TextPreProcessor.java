@@ -1,4 +1,4 @@
-package com.github.ricedope;
+package com.github.ricedope.models.logic;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;

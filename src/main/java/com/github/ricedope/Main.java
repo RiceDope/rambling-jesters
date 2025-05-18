@@ -9,6 +9,10 @@ import java.awt.Desktop;
 
 import javax.swing.JFileChooser;
 
+import com.github.ricedope.models.logic.JesterFactory;
+import com.github.ricedope.models.logic.Llama3Client;
+import com.github.ricedope.models.logic.Plane;
+
 import nu.xom.Builder;
 import nu.xom.Document;
 import nu.xom.Element;
