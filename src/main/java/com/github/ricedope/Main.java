@@ -1,5 +1,7 @@
 package com.github.ricedope;
 
+import com.github.ricedope.controllers.FXMLSceneController;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,10 +12,9 @@ public class Main extends Application{
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/FXML/XMLCreator.fxml"));
-        primaryStage.setTitle("My JavaFX App");
-        primaryStage.setScene(new Scene(root));
-        primaryStage.show();
+        
+        FXMLSceneController.setPrimaryStage(primaryStage);
+        
     }
     
     public static void main(String[] args) {

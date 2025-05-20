@@ -66,7 +66,7 @@
                         <VBox prefHeight="200.0" prefWidth="100.0">
                            <children>
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Please select a type a suitable LLM Prompt in the box below. The default prompt is there for you. Feel free to edit the prompt as needed." />
-                              <TextArea prefHeight="200.0" prefWidth="200.0" />
+                              <TextArea fx:id="promptTextArea" prefHeight="200.0" prefWidth="200.0" wrapText="true" />
                            </children>
                         </VBox>
                      </children>
@@ -80,7 +80,7 @@
                         <VBox prefHeight="200.0" prefWidth="100.0">
                            <children>
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Please enter your desired LLM Timout. (Recomended is 600secs)" />
-                              <TextField />
+                              <TextField fx:id="timeoutField"/>
                            </children>
                         </VBox>
                      </children>
@@ -96,19 +96,19 @@
                               <VBox prefHeight="200.0" prefWidth="100.0">
                                  <children>
                                     <Label text="How many Jesters would you like to interact" wrapText="true" />
-                                    <TextField />
+                                    <TextField fx:id="jestersCountField"/>
                                  </children>
                               </VBox>
                               <VBox prefHeight="200.0" prefWidth="100.0">
                                  <children>
                                     <Label text="How big would you like the grid to be" wrapText="true" />
-                                    <TextField />
+                                    <TextField fx:id="gridSizeField"/>
                                  </children>
                               </VBox>
                               <VBox prefHeight="200.0" prefWidth="100.0">
                                  <children>
                                     <Label text="How many interaction iterations would you like" wrapText="true" />
-                                    <TextField />
+                                    <TextField fx:id="iterationsField"/>
                                  </children>
                               </VBox>
                            </children>
@@ -126,13 +126,13 @@
                               <VBox prefHeight="200.0" prefWidth="100.0">
                                  <children>
                                     <Label text="Please select the minimum passage length" wrapText="true" />
-                                    <TextField />
+                                    <TextField fx:id="minPassageLengthField"/>
                                  </children>
                               </VBox>
                               <VBox prefHeight="200.0" prefWidth="100.0">
                                  <children>
                                     <Label text="Please select the maximum passage length" wrapText="true" />
-                                    <TextField />
+                                    <TextField fx:id="maxPassageLengthField"/>
                                  </children>
                               </VBox>
                            </children>
@@ -150,13 +150,13 @@
                               <VBox prefHeight="200.0" prefWidth="100.0">
                                  <children>
                                     <Label text="Please select a suitable location to save the XML file to" wrapText="true" />
-                                    <Button fx:id="outputFileButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#fileChooser" text="Choose A File" />
+                                    <Button fx:id="outputFileButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#directoryChooser" text="Choose A File" />
                                  </children>
                               </VBox>
                               <VBox prefHeight="200.0" prefWidth="100.0">
                                  <children>
                                     <Label text="Please type a suitable name for the XML Runner file to be called" wrapText="true" />
-                                    <TextField />
+                                    <TextField fx:id="xmlFilenameField"/>
                                  </children>
                               </VBox>
                            </children>
@@ -169,6 +169,6 @@
       </Accordion>
    </center>
    <right>
-      <Button mnemonicParsing="false" prefHeight="447.0" prefWidth="52.0" text="Create the XML File" BorderPane.alignment="CENTER" />
+      <Button mnemonicParsing="false" prefHeight="447.0" prefWidth="52.0" text="Create the XML File" BorderPane.alignment="CENTER" onAction="#createXML"/>
    </right>
 </BorderPane>
