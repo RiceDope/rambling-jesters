@@ -12,7 +12,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.ricedope.controllers.XMLCreatorController">
    <top>
       <VBox prefHeight="81.0" prefWidth="600.0" BorderPane.alignment="CENTER">
@@ -39,7 +38,7 @@
                         <HBox prefHeight="100.0" prefWidth="200.0">
                            <children>
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Please select a file for the seed text to be made from" />
-                              <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#fileChooser" text="Choose A File" />
+                              <Button fx:id="seedTextButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#fileChooser" text="Choose A File" />
                            </children>
                         </HBox>
                      </children>
@@ -53,7 +52,7 @@
                         <HBox prefHeight="100.0" prefWidth="200.0">
                            <children>
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Please select a file for the Jesters Names to come from" />
-                              <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#fileChooser" text="Choose A File" />
+                              <Button fx:id="jesterNamesButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#fileChooser" text="Choose A File" />
                            </children>
                         </HBox>
                      </children>
@@ -150,8 +149,8 @@
                            <children>
                               <VBox prefHeight="200.0" prefWidth="100.0">
                                  <children>
-                                    <Label text="Please select a suitable location to save the XML Fl to" wrapText="true" />
-                                    <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#fileChooser" text="Choose A File" />
+                                    <Label text="Please select a suitable location to save the XML file to" wrapText="true" />
+                                    <Button fx:id="outputFileButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#fileChooser" text="Choose A File" />
                                  </children>
                               </VBox>
                               <VBox prefHeight="200.0" prefWidth="100.0">
