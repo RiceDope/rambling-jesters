@@ -50,6 +50,12 @@ public class XMLCreatorController {
     }
 
     @FXML
+    private void exit() {
+        // Return the the previous screen
+        FXMLSceneController.previousScene();
+    }
+
+    @FXML
     private void createXML(ActionEvent event) {
         if (seedTextFile == null || jesterNamesFile == null || outputFile == null) {
             // Show an error message or alert to the user

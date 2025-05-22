@@ -14,6 +14,7 @@ public class Main extends Application{
     public void start(Stage primaryStage) throws Exception {
         
         FXMLSceneController.setPrimaryStage(primaryStage);
+        FXMLSceneController.loadScene("/FXML/HomeScreen.fxml");
         
     }
     
