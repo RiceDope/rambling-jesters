@@ -39,10 +39,17 @@ public class XMLCreatorController {
     // XML output settings
     @FXML private TextField xmlFilenameField;
 
+    // Status labels
+    @FXML private Label seedTextFileName;
+    @FXML private Label jesterNamesFileName;
+    @FXML private Label outputDirectory;
+    @FXML private Label status;
+
     // Store selected files
     private File seedTextFile;
     private File jesterNamesFile;
     private File outputFile;
+
 
     @FXML
     private void initialize() {
@@ -75,6 +82,7 @@ public class XMLCreatorController {
                           xmlFilenameField.getText());
 
         Logger.logprogress("XML file created successfully at " + outputFile.getAbsolutePath());
+        status.setText("XML file created successfully at " + outputFile.getAbsolutePath());
 
     }
 
@@ -83,6 +91,7 @@ public class XMLCreatorController {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setTitle("Select Directory");
         outputFile = directoryChooser.showDialog(null);
+        outputDirectory.setText("XML Runner will be made in: " + outputFile.getAbsolutePath());
     }
 
     /**
@@ -110,10 +119,15 @@ public class XMLCreatorController {
         );
         File selectedFile = fileChooser.showOpenDialog(null);
 
-        if (event.getSource() == seedTextButton) {
+        if (event.getSource() == seedTextButton) 
+        {
+            Logger.logprogress("Selected SeedText file: " + selectedFile.getAbsolutePath());
             seedTextFile = selectedFile;
+            seedTextFileName.setText("Seed Text File: " + seedTextFile.getAbsolutePath());
         } else if (event.getSource() == jesterNamesButton) {
+            Logger.logprogress("Selected Jester Names file: " + selectedFile.getAbsolutePath());
             jesterNamesFile = selectedFile;
+            jesterNamesFileName.setText("Jester Names File: " + jesterNamesFile.getAbsolutePath());
         }
 
     }
