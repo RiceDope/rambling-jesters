@@ -1,185 +1,148 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Accordion?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.TitledPane?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.ricedope.controllers.XMLCreatorController">
+<BorderPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.ricedope.controllers.XMLCreatorController">
    <top>
-      <VBox prefHeight="81.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+      <VBox spacing="10">
+         <padding>
+            <Insets top="10" right="10" bottom="10" left="10"/>
+         </padding>
          <children>
-            <HBox prefHeight="64.0" prefWidth="600.0">
+            <HBox spacing="20">
                <children>
                   <Button mnemonicParsing="false" onAction="#exit" text="Exit" />
-                  <Label text="Runner XML File Creation Tool" />
+                  <Label text="Runner XML File Creation Tool" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
                </children>
             </HBox>
          </children>
       </VBox>
    </top>
+
    <bottom>
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="github.com/RiceDope/rambling-jesters/tree/adding-gui" BorderPane.alignment="CENTER" />
+      <Text text="github.com/RiceDope/rambling-jesters/tree/adding-gui" BorderPane.alignment="CENTER" wrappingWidth="400" />
    </bottom>
+
    <center>
-      <Accordion BorderPane.alignment="CENTER">
-        <panes>
-            <TitledPane animated="false" text="Seed Text Corpus File">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <VBox prefHeight="100.0" prefWidth="200.0">
-                           <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Please select a file for the seed text to be made from" />
-                              <Button fx:id="seedTextButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#fileChooser" text="Choose A File" />
-                              <Label fx:id="seedTextFileName" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" text="No file selected" />
-                           </children>
-                        </VBox>
-                     </children>
-                  </AnchorPane>
-              </content>
+      <Accordion BorderPane.alignment="CENTER" fx:id="runnerAccordion">
+         <panes>
+            <TitledPane text="Seed Text Corpus File" fx:id="seedTextTitlePane">
+               <VBox spacing="10">
+                  <padding>
+                     <Insets top="10" right="10" bottom="10" left="10"/>
+                  </padding>
+                  <Text text="Please select a file for the seed text to be made from" wrappingWidth="400" />
+                  <Button fx:id="seedTextButton" mnemonicParsing="false" onAction="#fileChooser" text="Choose A File" />
+                  <Label fx:id="seedTextFileName" text="No file selected" wrapText="true" maxWidth="400" />
+               </VBox>
             </TitledPane>
-            <TitledPane animated="false" text="Jester Names File">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <VBox prefHeight="100.0" prefWidth="200.0">
-                           <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Please select a file for the Jesters Names to come from" />
-                              <Button fx:id="jesterNamesButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#fileChooser" text="Choose A File" />
-                              <Label fx:id="jesterNamesFileName" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" text="No file selected" />
-                           </children>
-                        </VBox>
-                     </children>
-                  </AnchorPane>
-              </content>
+
+            <TitledPane text="Jester Names File">
+               <VBox spacing="10">
+                  <padding>
+                     <Insets top="10" right="10" bottom="10" left="10"/>
+                  </padding>
+                  <Text text="Please select a file for the Jesters Names to come from" wrappingWidth="400" />
+                  <Button fx:id="jesterNamesButton" mnemonicParsing="false" onAction="#fileChooser" text="Choose A File" />
+                  <Label fx:id="jesterNamesFileName" text="No file selected" wrapText="true" maxWidth="400" />
+               </VBox>
             </TitledPane>
-            <TitledPane animated="false" text="LLM Prompt">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <VBox prefHeight="200.0" prefWidth="100.0">
-                           <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Please select a type a suitable LLM Prompt in the box below. The default prompt is there for you. Feel free to edit the prompt as needed." />
-                              <TextArea fx:id="promptTextArea" prefHeight="200.0" prefWidth="200.0" wrapText="true" />
-                           </children>
-                        </VBox>
-                     </children>
-                  </AnchorPane>
-              </content>
+
+            <TitledPane text="LLM Prompt">
+               <VBox spacing="10">
+                  <padding>
+                     <Insets top="10" right="10" bottom="10" left="10"/>
+                  </padding>
+                  <Text text="Please type a suitable LLM prompt in the box below. The default prompt is there for you. Feel free to edit it." wrappingWidth="400" />
+                  <TextArea fx:id="promptTextArea" wrapText="true" prefRowCount="6" />
+               </VBox>
             </TitledPane>
-            <TitledPane animated="false" text="LLM Timout">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <VBox prefHeight="200.0" prefWidth="100.0">
-                           <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Please enter your desired LLM Timout. (Recomended is 600secs)" />
-                              <TextField fx:id="timeoutField" />
-                           </children>
-                        </VBox>
-                     </children>
-                  </AnchorPane>
-              </content>
+
+            <TitledPane text="LLM Timeout">
+               <VBox spacing="10">
+                  <padding>
+                     <Insets top="10" right="10" bottom="10" left="10"/>
+                  </padding>
+                  <Text text="Please enter your desired LLM timeout (Recommended: 600 secs)" wrappingWidth="400" />
+                  <TextField fx:id="timeoutField" />
+               </VBox>
             </TitledPane>
-            <TitledPane animated="false" text="Grid Settings">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <HBox prefHeight="100.0" prefWidth="200.0">
-                           <children>
-                              <VBox prefHeight="200.0" prefWidth="100.0">
-                                 <children>
-                                    <Label text="How many Jesters would you like to interact" wrapText="true" />
-                                    <TextField fx:id="jestersCountField" />
-                                 </children>
-                              </VBox>
-                              <VBox prefHeight="200.0" prefWidth="100.0">
-                                 <children>
-                                    <Label text="How big would you like the grid to be" wrapText="true" />
-                                    <TextField fx:id="gridSizeField" />
-                                 </children>
-                              </VBox>
-                              <VBox prefHeight="200.0" prefWidth="100.0">
-                                 <children>
-                                    <Label text="How many interaction iterations would you like" wrapText="true" />
-                                    <TextField fx:id="iterationsField" />
-                                 </children>
-                              </VBox>
-                           </children>
-                        </HBox>
-                     </children>
-                  </AnchorPane>
-              </content>
+
+            <TitledPane text="Grid Settings">
+               <HBox spacing="30">
+                  <padding>
+                     <Insets top="10" right="10" bottom="10" left="10"/>
+                  </padding>
+                  <VBox spacing="10">
+                     <Label text="How many Jesters would you like to interact" wrapText="true" maxWidth="200" />
+                     <TextField fx:id="jestersCountField" />
+                  </VBox>
+                  <VBox spacing="10">
+                     <Label text="How big would you like the grid to be" wrapText="true" maxWidth="200" />
+                     <TextField fx:id="gridSizeField" />
+                  </VBox>
+                  <VBox spacing="10">
+                     <Label text="How many interaction iterations would you like" wrapText="true" maxWidth="200" />
+                     <TextField fx:id="iterationsField" />
+                  </VBox>
+               </HBox>
             </TitledPane>
-            <TitledPane animated="false" text="Passage Length">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <HBox prefHeight="100.0" prefWidth="200.0">
-                           <children>
-                              <VBox prefHeight="200.0" prefWidth="100.0">
-                                 <children>
-                                    <Label text="Please select the minimum passage length" wrapText="true" />
-                                    <TextField fx:id="minPassageLengthField" />
-                                 </children>
-                              </VBox>
-                              <VBox prefHeight="200.0" prefWidth="100.0">
-                                 <children>
-                                    <Label text="Please select the maximum passage length" wrapText="true" />
-                                    <TextField fx:id="maxPassageLengthField" />
-                                 </children>
-                              </VBox>
-                           </children>
-                        </HBox>
-                     </children>
-                  </AnchorPane>
-              </content>
+
+            <TitledPane text="Passage Length">
+               <HBox spacing="30">
+                  <padding>
+                     <Insets top="10" right="10" bottom="10" left="10"/>
+                  </padding>
+                  <VBox spacing="10">
+                     <Label text="Please select the minimum passage length" wrapText="true" maxWidth="200" />
+                     <TextField fx:id="minPassageLengthField" />
+                  </VBox>
+                  <VBox spacing="10">
+                     <Label text="Please select the maximum passage length" wrapText="true" maxWidth="200" />
+                     <TextField fx:id="maxPassageLengthField" />
+                  </VBox>
+               </HBox>
             </TitledPane>
-            <TitledPane animated="false" text="XML File Settings">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <HBox prefHeight="100.0" prefWidth="200.0">
-                           <children>
-                              <VBox prefHeight="200.0" prefWidth="100.0">
-                                 <children>
-                                    <Label text="Please select a suitable location to save the XML file to" wrapText="true" />
-                                    <Button fx:id="outputFileButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#directoryChooser" text="Choose A File" />
-                                    <Label fx:id="outputDirectory" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" text="No directory selected" />
-                                 </children>
-                              </VBox>
-                              <VBox prefHeight="200.0" prefWidth="100.0">
-                                 <children>
-                                    <Label text="Please type a suitable name for the XML Runner file to be called" wrapText="true" />
-                                    <TextField fx:id="xmlFilenameField" />
-                                 </children>
-                              </VBox>
-                           </children>
-                        </HBox>
-                     </children>
-                  </AnchorPane>
-              </content>
+
+            <TitledPane text="XML File Settings">
+               <HBox spacing="30">
+                  <padding>
+                     <Insets top="10" right="10" bottom="10" left="10"/>
+                  </padding>
+                  <VBox spacing="10">
+                     <Label text="Please select a suitable location to save the XML file to" wrapText="true" maxWidth="200" />
+                     <Button fx:id="outputFileButton" mnemonicParsing="false" onAction="#directoryChooser" text="Choose A File" />
+                     <Label fx:id="outputDirectory" text="No directory selected" wrapText="true" maxWidth="200" />
+                  </VBox>
+                  <VBox spacing="10">
+                     <Label text="Please type a suitable name for the XML Runner file to be called" wrapText="true" maxWidth="200" />
+                     <TextField fx:id="xmlFilenameField" />
+                  </VBox>
+               </HBox>
             </TitledPane>
-        </panes>
+         </panes>
       </Accordion>
    </center>
+
    <right>
-      <Button mnemonicParsing="false" onAction="#createXML" prefHeight="447.0" prefWidth="52.0" text="Create the XML File" BorderPane.alignment="CENTER" />
+      <VBox alignment="CENTER">
+         <padding>
+            <Insets top="10" right="10" bottom="10" left="10"/>
+         </padding>
+         <Button mnemonicParsing="false" onAction="#createXML" text="Create the XML File" />
+      </VBox>
    </right>
+
    <left>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-         <children>
-            <Label text="Status" />
-            <Label fx:id="status" text="Press Create to make a new XML Runner File"  wrapText="true"/>
-         </children>
+      <VBox spacing="10">
+         <padding>
+            <Insets top="10" right="10" bottom="10" left="10"/>
+         </padding>
+         <Label text="Status" />
+         <Label fx:id="status" text="Press Create to make a new XML Runner File" wrapText="true" maxWidth="200" />
       </VBox>
    </left>
 </BorderPane>

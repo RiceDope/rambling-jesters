@@ -5,10 +5,12 @@ import java.io.File;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -45,6 +47,10 @@ public class XMLCreatorController {
     @FXML private Label outputDirectory;
     @FXML private Label status;
 
+    // Accordion options
+    @FXML private Accordion runnerAccordion;
+    @FXML private TitledPane seedTextTitlePane;
+
     // Store selected files
     private File seedTextFile;
     private File jesterNamesFile;
@@ -53,6 +59,9 @@ public class XMLCreatorController {
 
     @FXML
     private void initialize() {
+        // Set the default accordion pane
+        runnerAccordion.setExpandedPane(seedTextTitlePane);
+        // Set the default prompt text
         promptTextArea.setText("Please review the following text and return only the corrected version within quotation marks. Do not change the order of any non-duplicated phrases. Remove all duplicated phrases. Correct grammar and punctuation as needed to ensure the sentence flows naturally. Add connector words (e.g., and, but, then) only where necessary for fluidity. Do not include any explanation or extra output—only the revised text in quotation marks.");
     }
 
