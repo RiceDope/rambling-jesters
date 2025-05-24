@@ -9,11 +9,6 @@ public class HomeScreenController {
     @FXML
     private void CreateXML() {
         // Logic for creating a new Runnable XML file
-        Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("Create XML");
-        alert.setHeaderText(null);
-        alert.setContentText("Create XML button clicked!");
-        alert.showAndWait();
         FXMLSceneController.loadScene("/FXML/XMLCreator.fxml");
     }
 

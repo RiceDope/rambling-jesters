@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 public class FXMLSceneController {
     
     private static Stage primaryStage;
-    private static Stage previousStage;
+    private static Scene previousStage;
 
     public static void setPrimaryStage(Stage primaryStage) {
         FXMLSceneController.primaryStage = primaryStage;
@@ -18,19 +18,27 @@ public class FXMLSceneController {
 
     public static void loadScene(String fxmlFile) {
         try {
+            Logger.logprogress("Loading FXML scene: " + fxmlFile);
             Parent root = FXMLLoader.load(FXMLSceneController.class.getResource(fxmlFile));
-            previousStage = primaryStage;
+            previousStage = primaryStage.getScene();
             primaryStage.setScene(new Scene(root));
             primaryStage.show();
         } catch (Exception e) {
+            Logger.logerror("Failed to load FXML scene: " + fxmlFile);
             e.printStackTrace();
         }
     }
 
     public static void previousScene() {
+        Logger.logprogress("Swapping to previous scene");
         if (previousStage != null) {
-            primaryStage.setScene(previousStage.getScene());
-            primaryStage.show();
+            try {
+                primaryStage.setScene(previousStage);
+                primaryStage.show();
+            } catch (Exception e) {
+                Logger.logerror("Failed to load previous scene: " + previousStage);
+                e.printStackTrace();
+            }
         } else {
             Logger.logerror("No previous stage to return to.");
         }

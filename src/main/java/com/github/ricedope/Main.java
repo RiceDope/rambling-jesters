@@ -15,10 +15,13 @@ public class Main extends Application{
         
         FXMLSceneController.setPrimaryStage(primaryStage);
         FXMLSceneController.loadScene("/FXML/HomeScreen.fxml");
+        Logger.logprogress("Main application loaded successfully");
         
     }
     
     public static void main(String[] args) {
+        Logger.logLevel = Logger.loggingLevel.SOME;
+        Logger.logprogress("Launching JavaFX application");
         launch(args);
     }
 

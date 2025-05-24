@@ -50,8 +50,9 @@ public class XMLCreatorController {
     }
 
     @FXML
-    private void exit() {
+    private void exit(ActionEvent event) {
         // Return the the previous screen
+        Logger.logprogress("Exiting XML Creator");
         FXMLSceneController.previousScene();
     }
 
