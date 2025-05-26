@@ -22,10 +22,6 @@
       </VBox>
    </top>
 
-   <bottom>
-      <Text text="github.com/RiceDope/rambling-jesters/tree/adding-gui" BorderPane.alignment="CENTER" wrappingWidth="400" />
-   </bottom>
-
    <center>
       <Accordion BorderPane.alignment="CENTER" fx:id="runnerAccordion">
          <panes>
@@ -37,6 +33,13 @@
                   <Text text="Please select a file for the seed text to be made from" wrappingWidth="400" />
                   <Button fx:id="seedTextButton" mnemonicParsing="false" onAction="#fileChooser" text="Choose A File" />
                   <Label fx:id="seedTextFileName" text="No file selected" wrapText="true" maxWidth="400" />
+                  <Label wrapText="true" maxWidth="400">
+                     <text>
+                        The seed text file should contain the text that will be used as the basis for generating Jesters initial ideas. 
+                        Each Jester will be given a portion of text whose size is determined by the passage length settings. 
+                        These are then used to generate the Jesters' responses.
+                     </text>
+                  </Label>
                </VBox>
             </TitledPane>
 
@@ -48,6 +51,13 @@
                   <Text text="Please select a file for the Jesters Names to come from" wrappingWidth="400" />
                   <Button fx:id="jesterNamesButton" mnemonicParsing="false" onAction="#fileChooser" text="Choose A File" />
                   <Label fx:id="jesterNamesFileName" text="No file selected" wrapText="true" maxWidth="400" />
+                  <Label wrapText="true" maxWidth="400">
+                     <text>
+                        The Jester Names file should contain a list of names that will be assigned to each Jester. 
+                        This file should be on a single line with just a "," separating each name. 
+                        No other format is valid and will be rejected by the tool.
+                     </text>
+                  </Label>
                </VBox>
             </TitledPane>
 
@@ -58,6 +68,14 @@
                   </padding>
                   <Text text="Please type a suitable LLM prompt in the box below. The default prompt is there for you. Feel free to edit it." wrappingWidth="400" />
                   <TextArea fx:id="promptTextArea" wrapText="true" prefRowCount="6" />
+                  <Label wrapText="true" maxWidth="400">
+                     <text>
+                        The LLM prompt is the prompt given to the ollama 3 model to formulate the Jesters' responses into a more coherent structured.
+                        This step however can be used to add whatever you wish, be that enhancements to the prompt or a completely different prompt.
+                        The prompt should be structured in a way that allows the LLM to understand the context of the Jesters and generate appropriate responses.
+                        A sample prompt is provided, it's use is recommended for first time users.
+                     </text>
+                  </Label>
                </VBox>
             </TitledPane>
 
@@ -66,8 +84,16 @@
                   <padding>
                      <Insets top="10" right="10" bottom="10" left="10"/>
                   </padding>
-                  <Text text="Please enter your desired LLM timeout (Recommended: 600 secs)" wrappingWidth="400" />
-                  <TextField fx:id="timeoutField" />
+                  <Text text="Please enter your desired LLM timeout" wrappingWidth="400" />
+                  <TextField fx:id="timeoutField" wrapText="true" maxWidth="400"/>
+                  <Label wrapText="true" maxWidth="400">
+                     <text>
+                        The LLM timeout is the maximum time in seconds that the LLM will be allowed to generate a response.
+                        This number is for each request, if two requests are made the maximum time allowed will be double this number.
+                        If the LLM does not respond within this time, the request will be aborted and an error will be logged.
+                        It is recommended to set this to a high value, such as 600 seconds, to allow the LLM enough time to generate a response.
+                     </text>
+                  </Label>
                </VBox>
             </TitledPane>
 
@@ -79,14 +105,17 @@
                   <VBox spacing="10">
                      <Label text="How many Jesters would you like to interact" wrapText="true" maxWidth="200" />
                      <TextField fx:id="jestersCountField" />
+                     <Label wrapText="true" maxWidth="200" text="This is the total number of individual Jesters that will be created. More Jesters more unique interactions." />
                   </VBox>
                   <VBox spacing="10">
                      <Label text="How big would you like the grid to be" wrapText="true" maxWidth="200" />
                      <TextField fx:id="gridSizeField" />
+                     <Label wrapText="true" maxWidth="200" text="The grid is the 2D plane that Jesters interact on it will be nxn sized. Jesters interact in a set pattern x/3 around center." />
                   </VBox>
                   <VBox spacing="10">
                      <Label text="How many interaction iterations would you like" wrapText="true" maxWidth="200" />
                      <TextField fx:id="iterationsField" />
+                     <Label wrapText="true" maxWidth="200" text="This is the total number of times that the main interaction loop will occur. A maximum of 1 interaction per iteration can occur but an action is not guaranteed." />
                   </VBox>
                </HBox>
             </TitledPane>
@@ -99,10 +128,12 @@
                   <VBox spacing="10">
                      <Label text="Please select the minimum passage length" wrapText="true" maxWidth="200" />
                      <TextField fx:id="minPassageLengthField" />
+                     <Label wrapText="true" maxWidth="200" text="This is the minimum size that a passage can be to be considered as seed text." />
                   </VBox>
                   <VBox spacing="10">
                      <Label text="Please select the maximum passage length" wrapText="true" maxWidth="200" />
                      <TextField fx:id="maxPassageLengthField" />
+                     <Label wrapText="true" maxWidth="200" text="This is the maximum size an idea can get in the main loop. This allows a limit to what your PC can handle approach. Stanford Core NLP is expensive. Text over too large could crash your PC while being processed." />
                   </VBox>
                </HBox>
             </TitledPane>
@@ -121,6 +152,7 @@
                      <Label text="Please type a suitable name for the XML Runner file to be called" wrapText="true" maxWidth="200" />
                      <TextField fx:id="xmlFilenameField" />
                   </VBox>
+                  <Label wrapText="true" maxWidth="200" text="This file that will be created is required to run the program. Note down it's directory so you can find it later." />
                </HBox>
             </TitledPane>
          </panes>
@@ -141,8 +173,26 @@
          <padding>
             <Insets top="10" right="10" bottom="10" left="10"/>
          </padding>
-         <Label text="Status" />
+         <Label text="This tool:" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+         <Label wrapText="true" maxWidth="200" fx:id="instructionsLabel">
+            <text>
+               Creating a file: 
+               This tool allows for the quick creation of an XML Runner file that can be used to generate an output from the Rambling Jesters project. 
+               Please fill in the required fields and select the necessary files to create a valid XML Runner file. 
+               More information about each field can be found in the respective central panes.
+            </text>
+         </Label>
+         <Label text="Status:" />
          <Label fx:id="status" text="Press Create to make a new XML Runner File" wrapText="true" maxWidth="200" />
       </VBox>
    </left>
+
+   <bottom>
+      <HBox alignment="CENTER" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets top="10" bottom="10"/>
+         </padding>
+         <Label text="https://github.com/RiceDope/rambling-jesters" style="-fx-font-style: italic;" wrapText="true"/>
+      </HBox>
+   </bottom>
 </BorderPane>

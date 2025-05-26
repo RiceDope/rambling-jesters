@@ -46,6 +46,7 @@ public class XMLCreatorController {
     @FXML private Label jesterNamesFileName;
     @FXML private Label outputDirectory;
     @FXML private Label status;
+    @FXML private Label instructionsLabel;
 
     // Accordion options
     @FXML private Accordion runnerAccordion;
@@ -63,6 +64,12 @@ public class XMLCreatorController {
         runnerAccordion.setExpandedPane(seedTextTitlePane);
         // Set the default prompt text
         promptTextArea.setText("Please review the following text and return only the corrected version within quotation marks. Do not change the order of any non-duplicated phrases. Remove all duplicated phrases. Correct grammar and punctuation as needed to ensure the sentence flows naturally. Add connector words (e.g., and, but, then) only where necessary for fluidity. Do not include any explanation or extra output—only the revised text in quotation marks.");
+        instructionsLabel.setText("""
+Creating a file: 
+This tool allows for the quick creation of an XML Runner file that can be used to generate an output from the Rambling Jesters project. 
+Please fill in the required fields and select the necessary files to create a valid XML Runner file. 
+More information about each field can be found in the respective central panes.
+                """);
     }
 
     @FXML

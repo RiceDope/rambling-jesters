@@ -22,9 +22,26 @@ public class XMLRunnerController {
     @FXML private Label outputLabel;
     @FXML private TextField outputFilename;
     @FXML private Label runLocation;
+    @FXML private Label instructionsLabel;
 
     private File selectedFile;
     private Output mostRecentOutput;
+
+    @FXML
+    private void initialize() {
+        instructionsLabel.setText("""
+Running a file:
+Please select the XML Runner file that has been made by clicking "Select a runner file" and then navigating to your target directory.
+Assuming all the files can be located and opened, your sample text will be ready in around 5–10 minutes.
+Please do not attempt to leave this page as it will interrupt the artifact generation and possibly kill the process.
+
+Options:
+- Type in a filename for the output file in the text field provided. If left blank a default name will be applied.
+
+Notes:
+- If using the default filename, this can overwrite older outputs with the same default name.
+""");
+    }
 
     @FXML 
     private void run(ActionEvent event) {

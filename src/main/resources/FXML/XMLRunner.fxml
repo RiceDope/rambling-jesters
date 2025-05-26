@@ -9,7 +9,6 @@
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.github.ricedope.controllers.XMLRunnerController">
 
-   <!-- Top: Header with Exit Button and Title -->
    <top>
       <HBox alignment="CENTER_LEFT" spacing="20" BorderPane.alignment="CENTER">
          <padding>
@@ -21,19 +20,16 @@
       </HBox>
    </top>
 
-   <!-- Left: Instructional Text -->
    <left>
       <VBox spacing="10" BorderPane.alignment="CENTER" prefWidth="300">
          <padding>
             <Insets top="20" bottom="20" left="20" right="20"/>
          </padding>
-         <Label text="How To Run:" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
-         <Label text="Please select the XML Runner file that has been made. Assuming all the files can be located and opened, your sample text will be ready in around 5–10 minutes."
-                wrapText="true" maxWidth="260"/>
+         <Label text="This tool:" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+         <Label fx:id="instructionsLabel" wrapText="true" maxWidth="260" />
       </VBox>
    </left>
 
-   <!-- Center: File selection and status -->
    <center>
       <VBox spacing="15" alignment="CENTER" BorderPane.alignment="TOP_CENTER">
          <padding>
@@ -48,7 +44,6 @@
       </VBox>
    </center>
 
-   <!-- Right: Run button -->
    <right>
       <VBox alignment="CENTER" spacing="20" BorderPane.alignment="CENTER">
          <padding>
@@ -58,5 +53,14 @@
                  style="-fx-font-size: 16px; -fx-font-weight: bold;" />
       </VBox>
    </right>
+
+   <bottom>
+      <HBox alignment="CENTER" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets top="10" bottom="10"/>
+         </padding>
+         <Label text="https://github.com/RiceDope/rambling-jesters" style="-fx-font-style: italic;" wrapText="true"/>
+      </HBox>
+   </bottom>
 
 </BorderPane>
