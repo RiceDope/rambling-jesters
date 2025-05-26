@@ -1,9 +1,9 @@
 package com.github.ricedope.controllers;
 
+import com.github.ricedope.Logger;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Accordion;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TitledPane;
 
 public class HomeScreenController {
@@ -19,16 +19,14 @@ public class HomeScreenController {
     @FXML
     private void CreateXML() {
         // Logic for creating a new Runnable XML file
+        Logger.logprogress("Changing to XML Creator scene");
         FXMLSceneController.loadScene("/FXML/XMLCreator.fxml");
     }
 
     @FXML
     private void RunXML() {
         // Logic for running the process
-        Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("Run XML");
-        alert.setHeaderText(null);
-        alert.setContentText("Run button clicked!");
-        alert.showAndWait();
+        Logger.logprogress("Changing to XML Runner scene");
+        FXMLSceneController.loadScene("/FXML/XMLRunner.fxml");
     }
 }

@@ -151,7 +151,7 @@ public class Runner {
         p.destroy(); // Destroy the process to free up memory
 
         // Create a new Output object and populate it
-        Output output = new Output(name, seed, finalIdea, response, llmprompt, interactions, gridsize, minimumpassagelength, maximumpassagelength, jesternames, seedtext, filepath);
+        Output output = new Output(name, seed, finalIdea, response, llmprompt, interactions, gridsize, minimumpassagelength, maximumpassagelength, jesternames, seedtext, filepath, String.valueOf(llmtimeout), evaluation);
         return output;
     }
 }

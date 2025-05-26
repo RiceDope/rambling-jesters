@@ -13,6 +13,7 @@ public class Output {
     public String evaluation;
     public String llmCorrectedText;
     public String llmPrompt;
+    public String llmTimeout;
     public int iterations;
     public int gridSize;
     public int minimumPassageLength;
@@ -20,6 +21,7 @@ public class Output {
     public String jesterNames;
     public String sourceTexts;
     public String runnerFile;
+    public String llmEvaluation;
 
     /**
      * Constructor for the Output class
@@ -33,7 +35,7 @@ public class Output {
      * @param minimumPassageLength
      * @param maximumPassageLength
      */
-    public Output(String jesterName, String sourceText, String outputText, String llmCorrectedText, String llmPrompt, int iterations, int gridSize, int minimumPassageLength, int maximumPassageLength, String jesterNames, String sourceTexts, String runnerFile) {
+    public Output(String jesterName, String sourceText, String outputText, String llmCorrectedText, String llmPrompt, int iterations, int gridSize, int minimumPassageLength, int maximumPassageLength, String jesterNames, String sourceTexts, String runnerFile, String llmTimeout, String llmEvaluation) {
         this.jesterName = jesterName;
         this.sourceText = sourceText;
         this.outputText = outputText;
@@ -46,6 +48,8 @@ public class Output {
         this.jesterNames = jesterNames;
         this.sourceTexts = sourceTexts;
         this.runnerFile = runnerFile;
+        this.llmTimeout = llmTimeout;
+        this.llmEvaluation = llmEvaluation;
     }
 
 }

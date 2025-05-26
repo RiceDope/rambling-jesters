@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefHeight="800.0" prefWidth="1200.0"
+            xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.github.ricedope.controllers.XMLRunnerController">
+
+   <!-- Top: Header with Exit Button and Title -->
+   <top>
+      <HBox alignment="CENTER_LEFT" spacing="20" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets top="15" bottom="15" left="20" right="20"/>
+         </padding>
+         <Button mnemonicParsing="false" text="Exit" onAction="#exit"/>
+         <Label text="Rambling Jesters XML Runner"
+                style="-fx-font-size: 20px; -fx-font-weight: bold;" />
+      </HBox>
+   </top>
+
+   <!-- Left: Instructional Text -->
+   <left>
+      <VBox spacing="10" BorderPane.alignment="CENTER" prefWidth="300">
+         <padding>
+            <Insets top="20" bottom="20" left="20" right="20"/>
+         </padding>
+         <Label text="How To Run:" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+         <Label text="Please select the XML Runner file that has been made. Assuming all the files can be located and opened, your sample text will be ready in around 5–10 minutes."
+                wrapText="true" maxWidth="260"/>
+      </VBox>
+   </left>
+
+   <!-- Center: File selection and status -->
+   <center>
+      <VBox spacing="15" alignment="CENTER" BorderPane.alignment="TOP_CENTER">
+         <padding>
+            <Insets top="30" bottom="30" left="20" right="20"/>
+         </padding>
+         <Label text="Select a Runner File:" style="-fx-font-size: 16px;" />
+         <Button mnemonicParsing="false" onAction="#selectFile" text="Select a Runner File" />
+         <Label fx:id="fileStatus" text="NO FILE SELECTED" style="-fx-text-fill: grey;" />
+         <TextField fx:id="outputFilename" />
+         <Label fx:id="runLocation" text="Output File: " style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+         <Label text="" wrapText="true" maxWidth="600" fx:id="outputLabel" style="-fx-font-size: 14px; -fx-text-fill: black; -fx-background-color: #f0f0f0; -fx-padding: 10;"/>
+      </VBox>
+   </center>
+
+   <!-- Right: Run button -->
+   <right>
+      <VBox alignment="CENTER" spacing="20" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets top="20" bottom="20" left="10" right="20"/>
+         </padding>
+         <Button mnemonicParsing="false" onAction="#run" text="RUN"
+                 style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+      </VBox>
+   </right>
+
+</BorderPane>
