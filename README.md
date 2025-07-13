@@ -4,7 +4,7 @@ This project aims to bring the benefits of co-creativity to a virtual world, mod
 
 ## adding-gui
 
-This branch is dedicated to the development of a javafx application to run the project. Currently here is the compile steps for progress:
+This branch is dedicated to the development of a javafx application to run the project. The current main release can be found on RELEASE_OFFICIAL but all development will occur here. Currently here are the compile steps for progress:
 
 1. Make sure you have javafx SDK TODO: ADD LINK
 2. Make sure you have maven and java 24.0.1 installed
