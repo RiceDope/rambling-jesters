@@ -188,11 +188,7 @@
    </left>
 
    <bottom>
-      <HBox alignment="CENTER" BorderPane.alignment="CENTER">
-         <padding>
-            <Insets top="10" bottom="10"/>
-         </padding>
-         <Hyperlink style="-fx-font-style: italic;" wrapText="true" onAction="#hyperlink" fx:id="githubButton"/>
-      </HBox>
+      <fx:include source="Components/Footer.fxml" BorderPane.alignment="CENTER" />
    </bottom>
+
 </BorderPane>

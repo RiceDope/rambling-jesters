@@ -55,12 +55,7 @@
    </right>
 
    <bottom>
-      <HBox alignment="CENTER" BorderPane.alignment="CENTER">
-         <padding>
-            <Insets top="10" bottom="10"/>
-         </padding>
-         <Label text="https://github.com/RiceDope/rambling-jesters" style="-fx-font-style: italic;" wrapText="true"/>
-      </HBox>
+      <fx:include source="Components/Footer.fxml" BorderPane.alignment="CENTER"/>
    </bottom>
 
 </BorderPane>
