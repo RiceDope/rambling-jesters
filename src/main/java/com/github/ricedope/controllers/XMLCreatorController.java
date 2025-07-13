@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -17,6 +18,8 @@ import javafx.stage.FileChooser.ExtensionFilter;
 
 import com.github.ricedope.Logger;
 import com.github.ricedope.models.Creator;
+import com.github.ricedope.Definitions;
+import com.github.ricedope.models.NetworkingFunctions;
 
 public class XMLCreatorController {
 
@@ -52,6 +55,8 @@ public class XMLCreatorController {
     @FXML private Accordion runnerAccordion;
     @FXML private TitledPane seedTextTitlePane;
 
+    @FXML private Hyperlink githubButton;
+
     // Store selected files
     private File seedTextFile;
     private File jesterNamesFile;
@@ -70,6 +75,13 @@ This tool allows for the quick creation of an XML Runner file that can be used t
 Please fill in the required fields and select the necessary files to create a valid XML Runner file. 
 More information about each field can be found in the respective central panes.
                 """);
+        githubButton.setText(Definitions.APP_VERSION + " | " + Definitions.GITHUB_URL);
+    }
+
+    @FXML
+    private void hyperlink(ActionEvent event) {
+        Logger.logprogress("Opening GitHub repository in browser");
+        NetworkingFunctions.openBrowserToHyperlink(Definitions.GITHUB_URL);
     }
 
     @FXML

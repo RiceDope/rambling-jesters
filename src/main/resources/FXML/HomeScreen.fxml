@@ -36,17 +36,17 @@
                               <padding>
                                 <Insets top="10" bottom="10" left="10" right="10"/>
                               </padding>
-                              <Label text="Look through this sidebar for help with the application" wrapText="true" maxWidth="280"/>
+                              <Label text="Look through this sidebar for help with the application as well as release notes and important information." wrapText="true" maxWidth="280"/>
                            </VBox>
                         </content>
                      </TitledPane>
-                     <TitledPane text="How to Create XML" animated="true">
+                     <TitledPane text="How to Create an XML Runner file" animated="true">
                         <content>
                            <VBox spacing="5" maxWidth="280">
                               <padding>
                                 <Insets top="10" bottom="10" left="10" right="10"/>
                               </padding>
-                              <Label text="This section explains how to create an XML runner file. The full text will wrap and be scrollable if needed." wrapText="true" maxWidth="280"/>
+                              <Label text="A runner XML file is one which the program recognises and can produce a single distinct run out of. They require sourceText files to be located where the runner says they are, as well as Jesters names and other parameters about the program. Once created you can run them and generate an output." wrapText="true" maxWidth="280"/>
                            </VBox>
                         </content>
                      </TitledPane>
@@ -56,7 +56,7 @@
                               <padding>
                                 <Insets top="10" bottom="10" left="10" right="10"/>
                               </padding>
-                              <Label text="This section explains how to run an existing XML runner file with details on usage." wrapText="true" maxWidth="280"/>
+                              <Label text="When running an XML Runner is required. Once it is selected then you may click run and let the Jesters do their thing. This can take a while so be sure not to click on the screen which this is running. Output will be displayed in the application as well as in User.Home wherever that is located on your OS." wrapText="true" maxWidth="280"/>
                            </VBox>
                         </content>
                      </TitledPane>
@@ -66,7 +66,7 @@
                               <padding>
                                 <Insets top="10" bottom="10" left="10" right="10"/>
                               </padding>
-                              <Label text="Information about Rambling Jesters and this tool with detailed explanation." wrapText="true" maxWidth="280"/>
+                              <Label text="For a detailed explanation into the project please check the GitHub under the branch paper-explaining. This essay is from my time studying at the University of Kent and details the project at the point the Command Line Interface was last updated too. Check the README.md for where to find up to date information about the project." wrapText="true" maxWidth="280"/>
                            </VBox>
                         </content>
                      </TitledPane>
@@ -82,7 +82,7 @@
          <padding>
             <Insets top="20" left="20" right="20" bottom="20"/>
          </padding>
-         <Label text="Welcome to Rambling Jesters! Here you can create and run XML runner files." 
+         <Label text="Welcome to Rambling Jesters! A co-creativity tool for generating new text with the help of some old ideas. I hope you enjoy the project, if any issues arise please report them on the GitHub issues page and I'll get round to fixing them. Thank you for taking a look at the project today! :-)" 
                wrapText="true" maxWidth="800" />
       </VBox>
    </center>

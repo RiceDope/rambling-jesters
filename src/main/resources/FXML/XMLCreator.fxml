@@ -85,7 +85,7 @@
                      <Insets top="10" right="10" bottom="10" left="10"/>
                   </padding>
                   <Text text="Please enter your desired LLM timeout" wrappingWidth="400" />
-                  <TextField fx:id="timeoutField" wrapText="true" maxWidth="400"/>
+                  <TextField fx:id="timeoutField" />
                   <Label wrapText="true" maxWidth="400">
                      <text>
                         The LLM timeout is the maximum time in seconds that the LLM will be allowed to generate a response.
@@ -192,7 +192,7 @@
          <padding>
             <Insets top="10" bottom="10"/>
          </padding>
-         <Label text="https://github.com/RiceDope/rambling-jesters" style="-fx-font-style: italic;" wrapText="true"/>
+         <Hyperlink style="-fx-font-style: italic;" wrapText="true" onAction="#hyperlink" fx:id="githubButton"/>
       </HBox>
    </bottom>
 </BorderPane>
