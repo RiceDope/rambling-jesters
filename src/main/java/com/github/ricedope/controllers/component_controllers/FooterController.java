@@ -1,7 +1,7 @@
 package com.github.ricedope.controllers.component_controllers;
 
 import com.github.ricedope.Definitions;
-import com.github.ricedope.Logger;
+import com.github.rhys_h_walker.Logger;
 import com.github.ricedope.models.NetworkingFunctions;
 
 import javafx.event.ActionEvent;

@@ -1,6 +1,6 @@
 package com.github.ricedope.controllers;
 
-import com.github.ricedope.Logger;
+import com.github.rhys_h_walker.Logger;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Accordion;

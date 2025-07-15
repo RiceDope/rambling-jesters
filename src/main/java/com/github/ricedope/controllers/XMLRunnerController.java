@@ -5,7 +5,7 @@ import java.io.FileOutputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import com.github.ricedope.Logger;
+import com.github.rhys_h_walker.Logger;
 import com.github.ricedope.models.Runner;
 import com.github.ricedope.models.logic.Output;
 

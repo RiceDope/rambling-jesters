@@ -3,7 +3,7 @@ package com.github.ricedope.models.logic;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.github.ricedope.Logger;
+import com.github.rhys_h_walker.Logger;
 
 import edu.stanford.nlp.pipeline.CoreSentence;
 import edu.stanford.nlp.trees.Tree;
@@ -102,7 +102,7 @@ public class Jester {
         int random = (int) (Math.random() * 100); // Random number between 0 and 100
 
         if (random <= 35) { // Swap a phrase
-            Logger.logexchanges("Swapping a phrase");
+            Logger.logprogress("Swapping a phrase");
 
             // Get parse tree of our new Idea
             ArrayList<HashMap<String, ArrayList<Tree>>> sentencePhraseMap = otherJester.shareIdea().getDoc();
@@ -117,26 +117,26 @@ public class Jester {
 
             // Adjust the new Idea based on what was selected
             if (newIdea == null || newIdea.equals("")){
-                Logger.logexchanges("No new idea was created, no similar " + randomPhrase.getLabel() + " found");
+                Logger.logprogress("No new idea was created, no similar " + randomPhrase.getLabel() + " found");
             } else {
 
                 // Check if we violate maximum passage length
                 if (newIdea.length() >= maximumpassagelength) {
-                    Logger.logexchanges("New idea is too long (Removing least fav)");
+                    Logger.logprogress("New idea is too long (Removing least fav)");
                     removeLeastFavText();
                     return;
                 }
                 idea.takeNewIdea(newIdea);
-                Logger.logexchanges("New Idea Being taken: " + newIdea);
+                Logger.logprogress("New Idea Being taken: " + newIdea);
             }
 
         } else if (random <= 55) { // Personality
-            Logger.logexchanges("Using personality to adjust idea with");
+            Logger.logprogress("Using personality to adjust idea with");
 
             // Jester will select the sentence from the other Jester that most closey matches their personality
             CoreSentence closest = NLP.closestToSentiment(sentiment, otherJester.shareIdea().getSentences());
             if (closest == null) {
-                Logger.logexchanges("No sentences found with the same sentiment as " + sentiment);
+                Logger.logprogress("No sentences found with the same sentiment as " + sentiment);
                 return;
             }
 
@@ -155,7 +155,7 @@ public class Jester {
             String ideaToTake = sb.toString();
 
             if (takenPhrases.contains(closest.text())) {
-                Logger.logexchanges("Already taken this idea: " + closest.text());
+                Logger.logprogress("Already taken this idea: " + closest.text());
                 return;
             } else {
                 takenPhrases.add(closest.text());
@@ -163,19 +163,19 @@ public class Jester {
 
             // Check if we violate maximum passage length
             if (ideaToTake.length() >= maximumpassagelength) {
-                Logger.logexchanges("New idea is too long (Removing least fav)");
+                Logger.logprogress("New idea is too long (Removing least fav)");
                 removeLeastFavText();
                 return;
             }
             idea.takeNewIdea(ideaToTake);
 
         } else if (random <= 75) { // Listen to the other Jester
-            Logger.logexchanges("Listening to the other Jester");
+            Logger.logprogress("Listening to the other Jester");
 
             // Get the other Jesters recomended sentence and then append it to either the end or beginning of the current sentence
             CoreSentence recomended = otherJester.recommendSentence();
             if (recomended == null) {
-                Logger.logexchanges("No sentences found with the same sentiment as " + otherJester.sentiment);
+                Logger.logprogress("No sentences found with the same sentiment as " + otherJester.sentiment);
                 return;
             }
 
@@ -194,7 +194,7 @@ public class Jester {
             String ideaToTake = sb.toString();
 
             if (takenPhrases.contains(recomended.text())) {
-                Logger.logexchanges("Already taken this idea: " + recomended.text());
+                Logger.logprogress("Already taken this idea: " + recomended.text());
                 return;
             } else {
                 takenPhrases.add(recomended.text());
@@ -202,7 +202,7 @@ public class Jester {
 
             // Check if we violate maximum passage length
             if (ideaToTake.length() >= maximumpassagelength) {
-                Logger.logexchanges("New idea is too long (Removing lest fav)");
+                Logger.logprogress("New idea is too long (Removing lest fav)");
                 removeLeastFavText();
                 return;
             }
@@ -210,7 +210,7 @@ public class Jester {
             idea.takeNewIdea(ideaToTake);
 
         } else { // Expand the Jesters Phrase by adding a whole new phrase to the end of the current idea
-            Logger.logexchanges("Expanding the Jesters Phrase with");
+            Logger.logprogress("Expanding the Jesters Phrase with");
 
             int amountSentences = otherJester.shareIdea().getDoc().size();
 
@@ -232,7 +232,7 @@ public class Jester {
             String ideaToTake = sb.toString();
 
             if (takenPhrases.contains(sentenceSelected.text())) {
-                Logger.logexchanges("Already taken this idea: " + sentenceSelected.text());
+                Logger.logprogress("Already taken this idea: " + sentenceSelected.text());
                 return;
             } else {
                 takenPhrases.add(sentenceSelected.text());
@@ -240,7 +240,7 @@ public class Jester {
 
             // Check if we violate maximum passage length
             if (ideaToTake.length() >= maximumpassagelength) {
-                Logger.logexchanges("New idea is too long (Removing least fav)");
+                Logger.logprogress("New idea is too long (Removing least fav)");
                 removeLeastFavText();
                 return;
             }

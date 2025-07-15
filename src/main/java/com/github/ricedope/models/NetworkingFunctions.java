@@ -1,6 +1,6 @@
 package com.github.ricedope.models;
 
-import com.github.ricedope.Logger;
+import com.github.rhys_h_walker.Logger;
 
 public class NetworkingFunctions {
 

@@ -16,7 +16,7 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 
-import com.github.ricedope.Logger;
+import com.github.rhys_h_walker.Logger;
 import com.github.ricedope.models.Creator;
 
 public class XMLCreatorController {

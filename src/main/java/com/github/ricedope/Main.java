@@ -1,6 +1,8 @@
 package com.github.ricedope;
 
 import com.github.ricedope.controllers.FXMLSceneController;
+import com.github.rhys_h_walker.Logger;
+import com.github.rhys_h_walker.core_enums.LoggingLevel;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -19,7 +21,7 @@ public class Main extends Application{
     }
     
     public static void main(String[] args) {
-        Logger.logLevel = Logger.loggingLevel.SOME;
+        Logger.initializeLogger("rambling-jesters", LoggingLevel.ALL);
         Logger.logprogress("Launching JavaFX application");
         launch(args);
     }

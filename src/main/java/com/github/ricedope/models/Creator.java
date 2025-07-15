@@ -8,7 +8,7 @@ import java.util.Scanner;
 import javax.swing.JFileChooser;
 
 import com.github.ricedope.ANSI;
-import com.github.ricedope.Logger;
+import com.github.rhys_h_walker.Logger;
 
 import nu.xom.Document;
 import nu.xom.Element;

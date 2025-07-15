@@ -2,7 +2,7 @@ package com.github.ricedope.models;
 
 import java.io.File;
 
-import com.github.ricedope.Logger;
+import com.github.rhys_h_walker.Logger;
 import com.github.ricedope.models.logic.JesterFactory;
 import com.github.ricedope.models.logic.Llama3Client;
 import com.github.ricedope.models.logic.Output;
@@ -142,7 +142,7 @@ public class Runner {
                         "Do not include any text other than that of your answer" + //
                         "Text:" + response, llmtimeout);
 
-        Logger.clearConsole();
+        // Logger.clearConsole();
 
         Logger.logprogress("Original Idea:\n" + seed + "\n\n");
         Logger.logprogress("Jester-"+name+":\n" + response);

@@ -11,7 +11,7 @@ package com.github.ricedope.models.logic;
 
 import okhttp3.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.ricedope.Logger;
+import com.github.rhys_h_walker.Logger;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -66,7 +66,7 @@ public class Llama3Client {
         try {
             json = mapper.writeValueAsString(jsonMap);
         } catch (IOException e) {
-            Logger.logimportant("Error: " + e.getMessage());
+            Logger.logerror("Error: " + e.getMessage());
             return null;
         }
 
@@ -79,7 +79,7 @@ public class Llama3Client {
         // Send the request
         try (Response response = client.newCall(request).execute()) {
             if (!response.isSuccessful()) {
-                Logger.logimportant("Error: " + response.code());
+                Logger.logerror("Error: " + response.code());
                 return null;
             }
 
@@ -89,7 +89,7 @@ public class Llama3Client {
             Map<String, Object> result = mapper.readValue(responseBody, Map.class);
             return (String) result.get("response");
         } catch (IOException e) {
-            Logger.logimportant("Error: " + e.getMessage());
+            Logger.logerror("Error: " + e.getMessage());
             return null;
         }
 
@@ -99,7 +99,7 @@ public class Llama3Client {
         try {
             Thread.sleep(timeframe*1000);
         } catch (InterruptedException e) {
-            Logger.logimportant("Error waiting " + e.getMessage());
+            Logger.logerror("Error waiting " + e.getMessage());
         }
     }
 }

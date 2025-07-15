@@ -2,7 +2,7 @@ package com.github.ricedope.models.logic;
 
 import java.util.ArrayList;
 
-import com.github.ricedope.Logger;
+import com.github.rhys_h_walker.Logger;
 
 /**
  * A representation of a 2D plane that the Jesters can "wander" around and interect with each other
@@ -188,7 +188,7 @@ public class Plane {
                         continue; // Skip the base Jester
                     } else {
                         if (!visited.contains(grid[cx][cy])) {
-                            Logger.logexchanges("Found a close Jester: ");
+                            Logger.logmiscellaneous("Found a close Jester: ");
                             closeJesters.add(grid[cx][cy]);
                         }
                     }
