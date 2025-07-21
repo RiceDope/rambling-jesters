@@ -81,7 +81,7 @@
     <dependency>
 	    <groupId>com.github.rhys-h-walker</groupId>
 	    <artifactId>OnRailsLogging</artifactId>
-	    <version>v1.0.0</version>
+	    <version>v1.1.2</version>
 	  </dependency>
   </dependencies>
 
